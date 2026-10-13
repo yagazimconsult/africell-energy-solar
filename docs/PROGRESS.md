@@ -28,7 +28,7 @@ only when you say so.)
 | Enquiry & quote forms saved to Supabase | ✅ Done |
 | Sizing calculator (appliances → inverter, battery, panels) | ✅ Done |
 | Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
-| Our own lifestyle photos (no more copied house/rooftop photos) | ✅ 5 done · 5 queued for tomorrow (generator daily limit) |
+| Premium Africell-branded photos (modern homes, studio shots, showroom) | ⏳ 6 planned, queued (generator daily limit) |
 | Phone, WhatsApp, email, address | ⏳ Placeholders (by your choice, for now) |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
@@ -36,15 +36,13 @@ only when you say so.)
 
 ---
 
-## Next up (queued for tomorrow — image generator hit its daily limit)
+## Next up (queued — image generator hit its daily limit)
 
-1. **Redo the utility-room photo with real Africell products**: the inverter with the blue band and
-   "Premium AFRICELL" wordmark, and the Africell wall battery, instead of unbranded equipment.
-   Reference photos of the real Africell units are already uploaded to the image service.
-2. Aba shop street at evening with rooftop solar (for Shops & SMEs).
-3. Family at home with lights on during a power outage (for Home Solar).
-4. Close-up of black solar panels against a blue sky (for the panels guide/slides).
-5. Bungalow at sunset with rooftop solar (extra homepage slide).
+**New image direction (your feedback):** the first generated photos were too plain. All site photos
+will be redone as **modern, premium images** (luxury villa, studio product shots, upscale showroom),
+and **every inverter and battery shown will be a real Africell unit with "Premium AFRICELL" on it**,
+in the style of the Lagos Africell banners. Six images are planned. See
+[IMAGE-BRIEFS.md](IMAGE-BRIEFS.md) for each image, where it will be used, and its status.
 
 ---
 
