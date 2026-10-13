@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_NG",
     siteName: `${site.name} Aba`,
-    images: [{ url: "/images/site/product-family.webp", width: 1600, height: 675 }],
+    images: [{ url: "/images/site/gen-hero-house-dusk.webp", width: 2000, height: 1131 }],
   },
 };
 

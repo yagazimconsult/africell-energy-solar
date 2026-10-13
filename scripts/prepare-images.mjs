@@ -77,4 +77,10 @@ const jobs = [
   () => save(sharp(src("2024_10_26576.jpg")).extract({ left: 0, top: 80, width: 1205, height: 747 }), "site/commercial-rooftop.webp"),
 ];
 
+// Original imagery generated for this site (Higgsfield / GPT Image 2.5), kept in _source/generated.
+const GEN = "_source/generated";
+for (const name of ["hero-house-dusk", "installers", "campus-aerial", "utility-room", "showroom"]) {
+  jobs.push(() => save(sharp(path.join(GEN, `gen-${name}.png`)), `site/gen-${name}.webp`, { width: 2000, quality: 80 }));
+}
+
 for (const job of jobs) await job();

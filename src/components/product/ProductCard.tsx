@@ -19,7 +19,7 @@ export interface CardData {
 
 export function ProductCard({ card: c, priority = false }: { card: CardData; priority?: boolean }) {
   return (
-    <Link href={c.href} className="card card-hover group flex flex-col overflow-hidden">
+    <Link href={c.href} className="reveal card card-hover group flex flex-col overflow-hidden">
       <div className="relative aspect-[4/3.4] bg-gradient-to-b from-mist to-white">
         <Image
           src={c.image}

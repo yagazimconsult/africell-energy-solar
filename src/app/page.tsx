@@ -5,6 +5,51 @@ import { articleImageClass, articles, solutions } from "@/data/content";
 import { getCatalogue, toCard } from "@/lib/catalog";
 import { ProductCard } from "@/components/product/ProductCard";
 import { CtaBand, SectionHeading } from "@/components/ui";
+import { HeroSlider, type HeroSlide } from "@/components/home/HeroSlider";
+
+// Homepage slideshow. Photos are original images generated for this site.
+const SLIDES: HeroSlide[] = [
+  {
+    image: "/images/site/gen-hero-house-dusk.webp",
+    focus: "70% center",
+    eyebrow: "Now in Aba, Abia State",
+    title: "Power that stays on,",
+    highlight: "day and night.",
+    text: "Africell hybrid inverters, LiFePO4 lithium batteries and monocrystalline solar panels, with honest system sizing and local support from our Aba team.",
+    primary: { label: "Explore products", href: "/products" },
+    secondary: { label: "Size my system", href: "/support/sizing-guide" },
+  },
+  {
+    image: "/images/site/gen-utility-room.webp",
+    focus: "60% center",
+    eyebrow: "LiFePO4 lithium storage",
+    title: "Quiet, clean power",
+    highlight: "through every outage.",
+    text: "HY Series batteries from 5.12kWh to 15.36kWh, with a built-in BMS, at least 6,000 cycles and room to expand to 16 packs.",
+    primary: { label: "View batteries", href: "/products/lithium-batteries" },
+    secondary: { label: "How much storage do I need?", href: "/support/sizing-guide" },
+  },
+  {
+    image: "/images/site/gen-campus-aerial.webp",
+    focus: "60% center",
+    eyebrow: "Business & institutions",
+    title: "Solar that scales",
+    highlight: "with your business.",
+    text: "From shops and offices to schools and clinics: 5–10kVA inverters, parallel-capable batteries and high-output 550–650W panels.",
+    primary: { label: "Explore solutions", href: "/solutions" },
+    secondary: { label: "Request a quote", href: "/quote" },
+  },
+  {
+    image: "/images/site/gen-installers.webp",
+    focus: "55% center",
+    eyebrow: "Monocrystalline solar panels",
+    title: "Harvest the sunshine,",
+    highlight: "from 180W to 650W.",
+    text: "GL-MONO panels in ten power ratings, so your array fits your roof and your energy needs.",
+    primary: { label: "View solar panels", href: "/products/solar-panels" },
+    secondary: { label: "Talk to our team", href: "/contact" },
+  },
+];
 
 const FEATURED = ["5kva-hybrid-inverter", "hy-lfp-512200-10kwh", "hy-lfp-512300-15kwh", "gl-mono-550w"];
 
@@ -13,46 +58,23 @@ export default async function HomePage() {
   const featured = FEATURED.map((slug) => allProducts.find((e) => e.product.slug === slug)).filter((e) => e !== undefined);
   return (
     <>
-      {/* Hero */}
-      <section className="relative isolate overflow-hidden bg-ink text-white">
-        <Image src="/images/site/hero-home-night.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover object-[70%_center] opacity-80" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/85 to-ink/10" aria-hidden />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink to-transparent" aria-hidden />
-        <div className="container-x grid min-h-[620px] items-center gap-10 py-20 md:min-h-[680px] lg:grid-cols-[1.15fr_1fr]">
-          <div className="animate-fade-up">
-            <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-white/85 ring-1 ring-white/15 backdrop-blur">
-              <MapPin className="size-3.5 text-sun" aria-hidden /> Now in Aba, Abia State
-            </p>
-            <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.04] sm:text-6xl lg:text-[4.1rem]">
-              Power that stays on,
-              <span className="block bg-gradient-to-r from-amber-300 via-sun to-sun-2 bg-clip-text text-transparent">day and night.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-[17.5px] leading-relaxed text-white/75">
-              Africell hybrid inverters, LiFePO4 lithium batteries and monocrystalline solar panels, with honest system sizing and local support from our Aba team.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link href="/products" className="btn btn-sun">
-                Explore products <ArrowRight className="size-4" aria-hidden />
-              </Link>
-              <Link href="/support/sizing-guide" className="btn btn-glass">
-                <Calculator className="size-4" aria-hidden /> Size my system
-              </Link>
+      <HeroSlider slides={SLIDES} />
+
+      {/* Range at a glance */}
+      <section className="border-b border-line bg-white">
+        <dl className="container-x grid grid-cols-3 divide-x divide-line py-6 text-center">
+          {[
+            ["5–10kVA", "Hybrid inverters"],
+            ["Up to 15.36kWh", "Per battery pack"],
+            ["180–650W", "Solar modules"],
+          ].map(([v, l]) => (
+            <div key={l} className="px-2">
+              <dt className="sr-only">{l}</dt>
+              <dd className="font-display text-lg font-extrabold text-ink sm:text-2xl">{v}</dd>
+              <dd className="mt-0.5 text-[12px] text-muted sm:text-[13px]">{l}</dd>
             </div>
-            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/10 pt-7">
-              {[
-                ["5–10kVA", "Hybrid inverters"],
-                ["Up to 15kWh", "Per battery pack"],
-                ["180–650W", "Solar modules"],
-              ].map(([v, l]) => (
-                <div key={l}>
-                  <dt className="sr-only">{l}</dt>
-                  <dd className="font-display text-xl font-extrabold text-white sm:text-2xl">{v}</dd>
-                  <dd className="mt-1 text-[12.5px] text-white/55">{l}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </div>
+          ))}
+        </dl>
       </section>
 
       {/* Product categories */}
@@ -70,7 +92,7 @@ export default async function HomePage() {
               <Link
                 key={cat.slug}
                 href={`/products/${cat.slug}`}
-                className={`group relative flex min-h-[420px] flex-col overflow-hidden rounded-[1.75rem] p-7 bg-mist text-ink transition-shadow hover:shadow-lift`}
+                className={`reveal group relative flex min-h-[420px] flex-col overflow-hidden rounded-[1.75rem] p-7 bg-mist text-ink transition-shadow hover:shadow-lift`}
               >
                 <div className="relative z-10">
                   <p className={`text-[12px] font-bold uppercase tracking-[0.14em] text-brand`}>{count} models</p>
@@ -105,7 +127,7 @@ export default async function HomePage() {
               { icon: BatteryCharging, title: "Store", text: "LiFePO4 batteries store surplus energy for evenings and outages.", href: "/products/lithium-batteries" },
               { icon: HomeIcon, title: "Power", text: "Your home or business runs quietly, without generator noise or fumes.", href: "/solutions" },
             ].map((s, i) => (
-              <li key={s.title} className="relative">
+              <li key={s.title} className="reveal relative">
                 <Link href={s.href} className="card card-hover flex h-full flex-col p-6">
                   <span className="flex items-center justify-between">
                     <span className="grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 to-sun-2 text-white shadow-[0_10px_24px_-10px_rgb(249_115_22/0.8)]">
@@ -134,7 +156,7 @@ export default async function HomePage() {
 
       {/* Why us */}
       <section className="relative overflow-hidden bg-ink py-20 text-white md:py-28">
-        <Image src="/images/site/product-family.webp" alt="" fill sizes="100vw" className="object-cover opacity-[0.12]" />
+        <Image src="/images/site/gen-showroom.webp" alt="" fill sizes="100vw" className="object-cover opacity-[0.16]" />
         <div className="container-x relative grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:items-center">
           <div>
             <p className="eyebrow !text-sun">Why buy from us</p>
@@ -153,7 +175,7 @@ export default async function HomePage() {
               { icon: Calculator, title: "Honest sizing", text: "We size systems to your real load, not the biggest invoice." },
               { icon: TrendingUp, title: "Built to grow", text: "Parallel-capable inverters and batteries expand with your needs." },
             ].map((f) => (
-              <div key={f.title} className="rounded-2xl bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur">
+              <div key={f.title} className="reveal rounded-2xl bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur">
                 <f.icon className="size-6 text-sun" aria-hidden />
                 <h3 className="mt-4 text-[17px] font-bold">{f.title}</h3>
                 <p className="mt-1.5 text-[14px] leading-relaxed text-white/65">{f.text}</p>
@@ -168,7 +190,7 @@ export default async function HomePage() {
         <SectionHeading eyebrow="Solutions" title="Systems for every kind of building" action={{ label: "All solutions", href: "/solutions" }} />
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {solutions.map((s) => (
-            <Link key={s.slug} href={`/solutions/${s.slug}`} className="group relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[1.75rem] p-7 text-white">
+            <Link key={s.slug} href={`/solutions/${s.slug}`} className="reveal group relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[1.75rem] p-7 text-white">
               <Image src={s.image} alt="" fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/5" aria-hidden />
               <div className="relative">
@@ -219,7 +241,7 @@ export default async function HomePage() {
         <SectionHeading eyebrow="News & guides" title="Learn before you buy" action={{ label: "All articles", href: "/news" }} />
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {articles.map((a) => (
-            <Link key={a.slug} href={`/news/${a.slug}`} className="card card-hover group flex flex-col overflow-hidden">
+            <Link key={a.slug} href={`/news/${a.slug}`} className="reveal card card-hover group flex flex-col overflow-hidden">
               <div className="relative aspect-[16/10] bg-mist">
                 <Image src={a.image} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className={`${articleImageClass(a.image)} transition-transform duration-500 group-hover:scale-[1.03]`} />
               </div>

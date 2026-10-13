@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="About us" title="Bringing premium solar to Aba" intro="An independent, Aba-based business supplying genuine Africell solar products, with the local support that a long-term investment deserves." image="/images/site/africell-sign.webp" crumbs={[{ label: "About us" }]} />
+      <PageHero eyebrow="About us" title="Bringing premium solar to Aba" intro="An independent, Aba-based business supplying genuine Africell solar products, with the local support that a long-term investment deserves." image="/images/site/gen-showroom.webp" crumbs={[{ label: "About us" }]} />
 
       <section className="container-x grid gap-12 py-16 md:py-24 lg:grid-cols-2 lg:items-center">
         <div>
@@ -28,7 +28,7 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-mist">
-          <Image src="/images/site/product-family.webp" alt="Africell product range: solar panels, inverters and lithium batteries" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+          <Image src="/images/site/gen-utility-room.webp" alt="A wall-mounted hybrid inverter and lithium battery installed in a home utility room" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
         </div>
       </section>
 

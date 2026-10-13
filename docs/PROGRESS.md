@@ -27,6 +27,8 @@ only when you say so.)
 | Product data stored in Supabase (Africell project) | ✅ Done |
 | Enquiry & quote forms saved to Supabase | ✅ Done |
 | Sizing calculator (appliances → inverter, battery, panels) | ✅ Done |
+| Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
+| Our own lifestyle photos (no more copied house/rooftop photos) | ✅ 5 done · 4 more queued (generator daily limit) |
 | Phone, WhatsApp, email, address | ⏳ Placeholders (by your choice, for now) |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
@@ -35,6 +37,19 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-10-13 — Slideshow, scroll animations and our own photos
+- Homepage hero is now a Deye-style slideshow: 4 slides that crossfade every 7 seconds with a slow
+  zoom, animated headlines, arrows and progress dots. Pauses when you hover; respects phones set to
+  "reduce motion".
+- Cards and section titles now fade up gently as you scroll.
+- Generated 5 original, high-quality photos set in Nigeria (modern Aba home at dusk, utility room with
+  inverter and battery, school/clinic campus with rooftop solar, installers on a roof, a showroom).
+  Equipment is unbranded and there is no text or logos in them.
+- Replaced every house/rooftop/lifestyle photo that came from the Lagos website. Africell product photos
+  (inverters, batteries, panels) are still used, since they show the actual products.
+- 4 more photos (Aba shop street, family at home during an outage, panel close-up, bungalow at sunset)
+  could not be generated today: the image account hit its daily limit. Queued for next time.
 
 ### 2026-10-13 — Progress log and preview
 - Added this progress log (`docs/PROGRESS.md`).

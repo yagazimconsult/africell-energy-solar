@@ -92,7 +92,7 @@ export function SectionHeading({
   action?: { label: string; href: string };
 }) {
   return (
-    <div className={`flex flex-col gap-5 md:flex-row md:items-end md:justify-between ${align === "center" ? "items-center text-center md:flex-col md:items-center" : ""}`}>
+    <div className={`reveal flex flex-col gap-5 md:flex-row md:items-end md:justify-between ${align === "center" ? "items-center text-center md:flex-col md:items-center" : ""}`}>
       <div className={align === "center" ? "max-w-2xl" : "max-w-2xl"}>
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h2 className="mt-3 text-3xl font-extrabold leading-tight text-ink md:text-[2.5rem]">{title}</h2>

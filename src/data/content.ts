@@ -20,7 +20,7 @@ export const solutions: Solution[] = [
     name: "Home Solar & Backup",
     eyebrow: "Residential",
     summary: "Quiet, clean power for lights, fans, TVs, fridges and more, day and night.",
-    image: "/images/site/hero-home-night.webp",
+    image: "/images/site/gen-hero-house-dusk.webp",
     intro: [
       "Most homes in Aba depend on a mix of grid supply and petrol generators. A solar system with lithium storage replaces generator noise, fumes and fuel runs with silent, automatic power.",
       "We size every home system around the appliances you actually use, so you are not paying for capacity you do not need.",
@@ -42,7 +42,7 @@ export const solutions: Solution[] = [
     name: "Shops, Offices & SMEs",
     eyebrow: "Small business",
     summary: "Keep tills, lighting, cold rooms and machines running through every outage.",
-    image: "/images/site/product-family.webp",
+    image: "/images/site/gen-installers.webp",
     intro: [
       "For traders, offices and workshops, every hour without power is lost sales. Solar with lithium storage gives you predictable power and frees you from daily fuel costs.",
       "We help you work out the load that matters most to your business and build a system around it.",
@@ -64,7 +64,7 @@ export const solutions: Solution[] = [
     name: "Commercial & Institutional",
     eyebrow: "Commercial",
     summary: "Larger systems for schools, clinics, churches, hotels and commercial buildings.",
-    image: "/images/site/commercial-rooftop.webp",
+    image: "/images/site/gen-campus-aerial.webp",
     intro: [
       "Institutions need power they can rely on, often for critical equipment. Larger solar arrays with parallel inverters and battery banks deliver resilient, low-running-cost energy.",
       "Talk to us early in your planning. We will help you scope the load and plan a system that can be expanded in stages.",
@@ -148,7 +148,7 @@ export const articles: Article[] = [
     excerpt: "kVA, watts and surge loads explained, with a simple method you can use before you speak to an installer.",
     date: "2026-10-01",
     readMinutes: 5,
-    image: "/images/site/product-family.webp",
+    image: "/images/site/gen-utility-room.webp",
     body: [
       { text: "Your inverter decides how much you can run at the same time. Too small and it trips when the fridge and pumping machine start together. Too large and you have paid for capacity you will never use." },
       { heading: "Step 1: list what must run together", text: "Write down the appliances you want powered during an outage and their wattage. It is usually on a label on the back or underside. A typical list might be LED lights (10W each), ceiling fans (70W each), a TV (100W), a fridge (150W) and a laptop (65W)." },
@@ -179,7 +179,7 @@ export const articles: Article[] = [
     excerpt: "A practical way to estimate your array size from your daily energy use and Aba's sunshine.",
     date: "2026-09-05",
     readMinutes: 4,
-    image: "/images/site/rooftop-panels.webp",
+    image: "/images/site/gen-installers.webp",
     body: [
       { text: "The number of panels you need depends on how much energy you use in a day, not on the size of your inverter alone." },
       { heading: "Step 1: estimate daily energy", text: "Multiply each appliance's wattage by the hours it runs per day, then add them up. For example, a 150W fridge running for an effective 10 hours uses 1,500Wh, or 1.5kWh." },

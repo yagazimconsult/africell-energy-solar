@@ -29,6 +29,18 @@
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: none; }
   }
+  /* Slow zoom-out on the active hero photo (Deye-style). */
+  --animate-ken-burns: ken-burns 8s ease-out both;
+  @keyframes ken-burns {
+    from { transform: scale(1.1); }
+    to { transform: scale(1); }
+  }
+  /* Fills the active slide indicator over the slide interval. */
+  --animate-slide-progress: slide-progress linear both;
+  @keyframes slide-progress {
+    from { width: 0%; }
+    to { width: 100%; }
+  }
 }
 
 @layer base {
@@ -153,4 +165,20 @@
   }
   .no-scrollbar { scrollbar-width: none; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+/* Scroll reveal: cards and headings fade up as they enter the viewport (Deye-style polish).
+   Pure CSS scroll-driven animation: no JavaScript; browsers without support simply show content. */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
 }
