@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import { categories } from "@/data/catalog";
+import { getCatalogue } from "@/lib/catalog";
+import { getContact } from "@/lib/site-settings";
 import { solutions } from "@/data/content";
-import { site, whatsappLink } from "@/config/site";
+import { site, whatsappHref } from "@/config/site";
 import { Logo } from "@/components/Logo";
 import { WhatsAppIcon } from "@/components/icons";
 
-export function Footer() {
+export async function Footer() {
+  const [{ categories }, contact] = await Promise.all([getCatalogue(), getContact()]);
   return (
     <footer className="sun-glow relative overflow-hidden text-white">
       <div className="grid-lines absolute inset-0 opacity-60" aria-hidden />
@@ -18,10 +20,10 @@ export function Footer() {
               Africell inverters, lithium batteries and solar panels, sold and supported locally in Aba, Abia State.
             </p>
             <div className="mt-6 flex gap-2">
-              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp !px-4 !py-2.5 !text-[13px]">
+              <a href={whatsappHref(contact.whatsapp)} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp !px-4 !py-2.5 !text-[13px]">
                 <WhatsAppIcon className="size-4" /> WhatsApp
               </a>
-              <a href={site.contact.phoneHref} className="btn btn-glass !px-4 !py-2.5 !text-[13px]">
+              <a href={contact.phoneHref} className="btn btn-glass !px-4 !py-2.5 !text-[13px]">
                 <Phone className="size-4" aria-hidden /> Call us
               </a>
             </div>
@@ -47,27 +49,27 @@ export function Footer() {
               <li className="flex gap-3">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-white/50" aria-hidden />
                 <span>
-                  {site.contact.addressLine}
+                  {contact.addressLine}
                   <br />
-                  {site.contact.city}, {site.contact.state}
+                  {contact.city}, {contact.state}
                 </span>
               </li>
               <li className="flex gap-3">
                 <Phone className="mt-0.5 size-4 shrink-0 text-white/50" aria-hidden />
-                <a href={site.contact.phoneHref} className="hover:text-white">
-                  {site.contact.phone}
+                <a href={contact.phoneHref} className="hover:text-white">
+                  {contact.phone}
                 </a>
               </li>
               <li className="flex gap-3">
                 <Mail className="mt-0.5 size-4 shrink-0 text-white/50" aria-hidden />
-                <a href={`mailto:${site.contact.email}`} className="break-all hover:text-white">
-                  {site.contact.email}
+                <a href={`mailto:${contact.email}`} className="break-all hover:text-white">
+                  {contact.email}
                 </a>
               </li>
               <li className="flex gap-3">
                 <Clock className="mt-0.5 size-4 shrink-0 text-white/50" aria-hidden />
                 <span>
-                  {site.contact.hours.map((h) => (
+                  {contact.hours.map((h) => (
                     <span key={h.days} className="block">
                       {h.days}: {h.time}
                     </span>

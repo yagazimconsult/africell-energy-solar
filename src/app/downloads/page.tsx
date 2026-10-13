@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { FileText } from "lucide-react";
-import { categories } from "@/data/catalog";
-import { whatsappLink } from "@/config/site";
+import { getCatalogue } from "@/lib/catalog";
+import { getContact } from "@/lib/site-settings";
+import { whatsappHref } from "@/config/site";
 import { PageHero } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/downloads" },
 };
 
-export default function DownloadsPage() {
+export default async function DownloadsPage() {
+  const [{ categories }, contact] = await Promise.all([getCatalogue(), getContact()]);
   return (
     <>
       <PageHero
@@ -52,7 +54,7 @@ export default function DownloadsPage() {
                       Installation guide
                     </Link>
                   )}
-                  <a href={whatsappLink(`Hello, please send me the datasheet and manual for the ${s.name}.`)} target="_blank" rel="noopener noreferrer" className="btn btn-brand !py-2.5 !text-[13.5px]">
+                  <a href={whatsappHref(contact.whatsapp, `Hello, please send me the datasheet and manual for the ${s.name}.`)} target="_blank" rel="noopener noreferrer" className="btn btn-brand !py-2.5 !text-[13.5px]">
                     Request datasheet
                   </a>
                 </div>

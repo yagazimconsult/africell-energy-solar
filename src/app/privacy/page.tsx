@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { site } from "@/config/site";
+import { getContact } from "@/lib/site-settings";
 import { PageHero } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Privacy Policy", alternates: { canonical: "/privacy" } };
 
 // TODO: have this reviewed for compliance with the Nigeria Data Protection Act 2023 before launch.
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  const contact = await getContact();
   return (
     <>
       <PageHero title="Privacy Policy" crumbs={[{ label: "Privacy Policy" }]} />
@@ -18,7 +20,7 @@ export default function PrivacyPage() {
         <h2>How long we keep it</h2>
         <p>We keep enquiry records for as long as needed to serve you and to meet our legal and accounting obligations.</p>
         <h2>Your rights</h2>
-        <p>Under the Nigeria Data Protection Act 2023 you may ask to access, correct or delete your personal data. Contact us at {site.contact.email}.</p>
+        <p>Under the Nigeria Data Protection Act 2023 you may ask to access, correct or delete your personal data. Contact us at {contact.email}.</p>
         <h2>Cookies</h2>
         <p>This website stores your quote list in your own browser so it is still there when you return. It does not use advertising cookies.</p>
       </section>

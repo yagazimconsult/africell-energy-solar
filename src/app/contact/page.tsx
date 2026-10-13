@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import { site, whatsappLink } from "@/config/site";
+import { site, whatsappHref } from "@/config/site";
+import { getContact } from "@/lib/site-settings";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import { WhatsAppIcon } from "@/components/icons";
 import { PageHero } from "@/components/ui";
@@ -11,12 +12,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const contact = await getContact();
   const cards = [
-    { icon: Phone, title: "Call us", lines: [site.contact.phone], href: site.contact.phoneHref, cta: "Call now" },
-    { icon: WhatsAppIcon, title: "WhatsApp", lines: ["Fastest way to reach our team"], href: whatsappLink("Hello Africell Solar Aba,"), cta: "Start chat", external: true },
-    { icon: Mail, title: "Email", lines: [site.contact.email], href: `mailto:${site.contact.email}`, cta: "Send email" },
-    { icon: MapPin, title: "Visit the showroom", lines: [site.contact.addressLine, `${site.contact.city}, ${site.contact.state}`], href: site.contact.mapUrl, cta: "Get directions", external: true },
+    { icon: Phone, title: "Call us", lines: [contact.phone], href: contact.phoneHref, cta: "Call now" },
+    { icon: WhatsAppIcon, title: "WhatsApp", lines: ["Fastest way to reach our team"], href: whatsappHref(contact.whatsapp, "Hello Africell Solar Aba,"), cta: "Start chat", external: true },
+    { icon: Mail, title: "Email", lines: [contact.email], href: `mailto:${contact.email}`, cta: "Send email" },
+    { icon: MapPin, title: "Visit the showroom", lines: [contact.addressLine, `${contact.city}, ${contact.state}`], href: contact.mapUrl, cta: "Get directions", external: true },
   ];
 
   return (
@@ -52,7 +54,7 @@ export default function ContactPage() {
           <Clock className="size-6 text-sun" aria-hidden />
           <h2 className="mt-4 text-xl font-extrabold">Opening hours</h2>
           <dl className="mt-5 divide-y divide-white/10">
-            {site.contact.hours.map((h) => (
+            {contact.hours.map((h) => (
               <div key={h.days} className="flex justify-between gap-4 py-3 text-[15px]">
                 <dt className="text-white/65">{h.days}</dt>
                 <dd className="font-semibold">{h.time}</dd>

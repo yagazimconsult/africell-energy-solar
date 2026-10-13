@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronRight } from "lucide-react";
-import { site, whatsappLink } from "@/config/site";
+import { site, whatsappHref } from "@/config/site";
+import { getContact } from "@/lib/site-settings";
 import { WhatsAppIcon } from "@/components/icons";
 
 export interface Crumb {
@@ -107,13 +108,14 @@ export function SectionHeading({
   );
 }
 
-export function CtaBand({
+export async function CtaBand({
   title = "Ready to switch to clean, reliable power?",
   text = "Tell us what you want to power. We will recommend the right system and send a quote.",
 }: {
   title?: string;
   text?: string;
 }) {
+  const contact = await getContact();
   return (
     <section className="container-x py-16 md:py-24">
       <div className="sun-glow relative overflow-hidden rounded-[2rem] px-6 py-12 text-white md:px-14 md:py-16">
@@ -128,7 +130,7 @@ export function CtaBand({
             <Link href="/quote" className="btn btn-sun">
               Request a quote <ArrowRight className="size-4" aria-hidden />
             </Link>
-            <a href={whatsappLink("Hello Africell Solar Aba, I'd like advice on a solar system.")} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
+            <a href={whatsappHref(contact.whatsapp, "Hello Africell Solar Aba, I'd like advice on a solar system.")} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
               <WhatsAppIcon className="size-4" /> WhatsApp
             </a>
           </div>

@@ -5,14 +5,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, ClipboardList, Menu, Phone, Search, X } from "lucide-react";
-import { categories } from "@/data/catalog";
-import { site, whatsappLink } from "@/config/site";
+import { useContact } from "@/components/ContactProvider";
+
 import { Logo } from "@/components/Logo";
 import { WhatsAppIcon } from "@/components/icons";
 import { useQuote } from "@/components/quote/QuoteProvider";
-import { nav } from "./nav";
+import { buildNav, type MenuCategory } from "./nav";
 
-export function Header() {
+export function Header({ categories }: { categories: MenuCategory[] }) {
+  const nav = buildNav(categories);
+  const contact = useContact();
   const pathname = usePathname();
   const [open, setOpen] = useState<string | null>(null);
   const [mobile, setMobile] = useState(false);
@@ -68,14 +70,14 @@ export function Header() {
             Authorised Africell dealer in <span className="font-semibold text-white">Aba, Abia State</span>
           </p>
           <div className="flex items-center gap-5">
-            <a href={site.contact.phoneHref} className="flex items-center gap-1.5 hover:text-white">
-              <Phone className="size-3.5" aria-hidden /> {site.contact.phone}
+            <a href={contact.phoneHref} className="flex items-center gap-1.5 hover:text-white">
+              <Phone className="size-3.5" aria-hidden /> {contact.phone}
             </a>
-            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-white">
+            <a href={contact.whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-white">
               <WhatsAppIcon className="size-3.5" /> WhatsApp us
             </a>
-            <a href={`mailto:${site.contact.email}`} className="hover:text-white">
-              {site.contact.email}
+            <a href={`mailto:${contact.email}`} className="hover:text-white">
+              {contact.email}
             </a>
           </div>
         </div>
@@ -224,7 +226,7 @@ export function Header() {
       </div>
 
       {/* Mobile drawer */}
-      {mobile && <MobileMenu onClose={() => setMobile(false)} />}
+      {mobile && <MobileMenu nav={nav} onClose={() => setMobile(false)} />}
     </header>
   );
 }
@@ -265,7 +267,8 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
   );
 }
 
-function MobileMenu({ onClose }: { onClose: () => void }) {
+function MobileMenu({ nav, onClose }: { nav: ReturnType<typeof buildNav>; onClose: () => void }) {
+  const contact = useContact();
   const [expanded, setExpanded] = useState<string | null>("Products");
   return (
     <div className="fixed inset-0 z-[60] xl:hidden" role="dialog" aria-modal="true" aria-label="Menu">
@@ -317,7 +320,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           <Link href="/quote" className="btn btn-sun w-full">
             Get a Quote
           </Link>
-          <a href={whatsappLink("Hello Africell Solar Aba, I'd like to make an enquiry.")} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp w-full">
+          <a href={contact.whatsappLink("Hello Africell Solar Aba, I'd like to make an enquiry.")} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp w-full">
             <WhatsAppIcon className="size-4" /> Chat on WhatsApp
           </a>
         </div>

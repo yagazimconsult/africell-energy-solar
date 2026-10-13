@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { categories } from "@/data/catalog";
-import { allProducts, toCard } from "@/lib/catalog";
+import { getCatalogue, toCard } from "@/lib/catalog";
 import { ProductBrowser } from "@/components/product/ProductBrowser";
 
 import { CtaBand, PageHero } from "@/components/ui";
@@ -16,6 +15,7 @@ export const metadata: Metadata = {
 
 export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ q?: string; category?: string }> }) {
   const { q = "", category = "all" } = await searchParams;
+  const { categories, allProducts } = await getCatalogue();
   const cards = allProducts.map(toCard);
 
   return (

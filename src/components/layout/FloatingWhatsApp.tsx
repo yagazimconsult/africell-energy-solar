@@ -1,10 +1,12 @@
-import { whatsappLink } from "@/config/site";
+import { whatsappHref } from "@/config/site";
+import { getContact } from "@/lib/site-settings";
 import { WhatsAppIcon } from "@/components/icons";
 
-export function FloatingWhatsApp() {
+export async function FloatingWhatsApp() {
+  const contact = await getContact();
   return (
     <a
-      href={whatsappLink("Hello Africell Solar Aba, I'd like to make an enquiry.")}
+      href={whatsappHref(contact.whatsapp, "Hello Africell Solar Aba, I'd like to make an enquiry.")}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"

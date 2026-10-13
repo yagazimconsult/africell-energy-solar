@@ -3,8 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AlertCircle, BadgeCheck, Check, FileText, MapPin, Package, Phone, ShieldCheck, Wrench } from "lucide-react";
-import { site, whatsappLink } from "@/config/site";
-import { allProducts, availabilityLabel, compatibleProducts, getProduct, productHref, relatedProducts, toCard } from "@/lib/catalog";
+import { site, whatsappHref } from "@/config/site";
+import { getContact } from "@/lib/site-settings";
+import { availabilityLabel, compatibleProducts, getCatalogue, getProduct, productHref, relatedProducts, toCard } from "@/lib/catalog";
 import { Gallery } from "@/components/product/Gallery";
 import { SpecTable } from "@/components/product/SpecTable";
 import { ProductCard } from "@/components/product/ProductCard";
@@ -14,13 +15,14 @@ import { Breadcrumbs, CtaBand } from "@/components/ui";
 
 type Params = { params: Promise<{ category: string; product: string }> };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { allProducts } = await getCatalogue();
   return allProducts.map((e) => ({ category: e.category.slug, product: e.product.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { category, product } = await params;
-  const entry = getProduct(category, product);
+  const entry = getProduct(await getCatalogue(), category, product);
   if (!entry) return {};
   const { product: p, category: c } = entry;
   const title = p.model ? `${p.name} (${p.model})` : p.name;
@@ -44,14 +46,15 @@ const sections = [
 
 export default async function ProductPage({ params }: Params) {
   const { category, product } = await params;
-  const entry = getProduct(category, product);
+  const [catalogue, contact] = await Promise.all([getCatalogue(), getContact()]);
+  const entry = getProduct(catalogue, category, product);
   if (!entry) notFound();
 
   const { product: p, series, category: cat, index } = entry;
   const url = `${site.url}${productHref(entry)}`;
   const gallery = p.gallery ?? series.gallery;
-  const related = relatedProducts(entry);
-  const compatible = compatibleProducts(entry);
+  const related = relatedProducts(catalogue, entry);
+  const compatible = compatibleProducts(catalogue, entry);
   const hasGuide = Boolean(series.guide?.length);
   const visibleSections = sections.filter((s) => (s.id === "installation" ? hasGuide : true));
   const enquiry = `Hello Africell Solar Aba, I'm interested in the ${p.name}${p.model ? ` (${p.model})` : ""}. Please send me a quote and availability.\n${url}`;
@@ -126,12 +129,12 @@ export default async function ProductPage({ params }: Params) {
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2">
             <AddToQuoteButton item={{ key: `${cat.slug}/${p.slug}`, name: p.name, model: p.model, href: productHref(entry), image: p.image }} className="w-full" />
-            <a href={whatsappLink(enquiry)} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp w-full">
+            <a href={whatsappHref(contact.whatsapp, enquiry)} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp w-full">
               <WhatsAppIcon className="size-4" /> Enquire on WhatsApp
             </a>
           </div>
-          <a href={site.contact.phoneHref} className="mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-muted hover:text-ink">
-            <Phone className="size-4" aria-hidden /> Or call {site.contact.phone}
+          <a href={contact.phoneHref} className="mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-muted hover:text-ink">
+            <Phone className="size-4" aria-hidden /> Or call {contact.phone}
           </a>
 
           <ul className="mt-8 grid gap-3 border-t border-line pt-6 text-[14px] sm:grid-cols-3">
@@ -306,7 +309,7 @@ export default async function ProductPage({ params }: Params) {
                 The datasheet and user manual for this product are available on request.
               </p>
               <a
-                href={whatsappLink(`Hello, please send me the datasheet and manual for the ${p.name}${p.model ? ` (${p.model})` : ""}.`)}
+                href={whatsappHref(contact.whatsapp, `Hello, please send me the datasheet and manual for the ${p.name}${p.model ? ` (${p.model})` : ""}.`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-ghost shrink-0"

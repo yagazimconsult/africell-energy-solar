@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/config/site";
-import { categories } from "@/data/catalog";
 import { articles, solutions } from "@/data/content";
-import { allProducts, productHref } from "@/lib/catalog";
+import { getCatalogue, productHref } from "@/lib/catalog";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const { categories, allProducts } = await getCatalogue();
   const now = new Date();
   const pages = ["", "/products", "/solutions", "/support", "/support/sizing-guide", "/support/faq", "/support/warranty", "/downloads", "/news", "/about", "/contact", "/quote", "/privacy", "/terms"];
   return [

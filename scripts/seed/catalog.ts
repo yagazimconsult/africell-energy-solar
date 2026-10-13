@@ -1,4 +1,4 @@
-import type { Category } from "./types";
+import type { Category } from "../../src/data/types.ts";
 
 // Source: product data published on africellsolar.com (Africell Energy Solar, Lagos),
 // cleaned up and restructured. Values the supplier has not published, or that were

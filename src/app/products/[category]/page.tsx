@@ -3,20 +3,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check } from "lucide-react";
-import { categories } from "@/data/catalog";
-import { allProducts, getCategory, toCard } from "@/lib/catalog";
+import { getCatalogue, getCategory, toCard } from "@/lib/catalog";
 import { ProductCard } from "@/components/product/ProductCard";
 import { SpecTable } from "@/components/product/SpecTable";
 import { CtaBand, PageHero } from "@/components/ui";
 
 type Params = { params: Promise<{ category: string }> };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { categories } = await getCatalogue();
   return categories.map((c) => ({ category: c.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const cat = getCategory((await params).category);
+  const cat = getCategory(await getCatalogue(), (await params).category);
   if (!cat) return {};
   return {
     title: `${cat.name} in Aba`,
@@ -27,7 +27,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 export default async function CategoryPage({ params }: Params) {
-  const cat = getCategory((await params).category);
+  const catalogue = await getCatalogue();
+  const { categories, allProducts } = catalogue;
+  const cat = getCategory(catalogue, (await params).category);
   if (!cat) notFound();
 
   return (

@@ -1,17 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BatteryCharging, Calculator, Cpu, Handshake, Home as HomeIcon, MapPin, ShieldCheck, Sun, TrendingUp } from "lucide-react";
-import { categories } from "@/data/catalog";
 import { articleImageClass, articles, solutions } from "@/data/content";
-import { allProducts, toCard } from "@/lib/catalog";
+import { getCatalogue, toCard } from "@/lib/catalog";
 import { ProductCard } from "@/components/product/ProductCard";
 import { CtaBand, SectionHeading } from "@/components/ui";
 
-const featured = ["5kva-hybrid-inverter", "hy-lfp-512200-10kwh", "hy-lfp-512300-15kwh", "gl-mono-550w"]
-  .map((slug) => allProducts.find((e) => e.product.slug === slug)!)
-  .filter(Boolean);
+const FEATURED = ["5kva-hybrid-inverter", "hy-lfp-512200-10kwh", "hy-lfp-512300-15kwh", "gl-mono-550w"];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { categories, allProducts } = await getCatalogue();
+  const featured = FEATURED.map((slug) => allProducts.find((e) => e.product.slug === slug)).filter((e) => e !== undefined);
   return (
     <>
       {/* Hero */}

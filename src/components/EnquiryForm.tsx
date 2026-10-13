@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
-import { whatsappLink } from "@/config/site";
+import { useContact } from "@/components/ContactProvider";
 import { WhatsAppIcon } from "@/components/icons";
 
 export interface EnquiryItem {
@@ -16,6 +16,7 @@ type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind
 export function EnquiryForm({ items = [], onSent, submitLabel = "Send enquiry" }: { items?: EnquiryItem[]; onSent?: () => void; submitLabel?: string }) {
   const [form, setForm] = useState({ name: "", phone: "", email: "", location: "", message: "", website: "" });
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const { whatsappLink } = useContact();
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -34,7 +35,7 @@ export function EnquiryForm({ items = [], onSent, submitLabel = "Send enquiry" }
     e.preventDefault();
     setStatus({ kind: "sending" });
     try {
-      const res = await fetch("/api/enquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, items }) });
+      const res = await fetch("/api/enquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, items, sourcePage: window.location.pathname }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error ?? "Something went wrong.");
       setStatus({ kind: "sent" });

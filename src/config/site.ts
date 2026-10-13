@@ -1,5 +1,5 @@
-// Central business details for the Aba website.
-// Every value marked TODO must be replaced with the real Aba details before launch.
+// Fixed brand details for the Aba website. Contact details (phone, WhatsApp, address,
+// hours) live in the Supabase `site_settings` table — see src/lib/site-settings.ts.
 
 export const site = {
   name: "Africell Energy Solar",
@@ -8,41 +8,30 @@ export const site = {
   description:
     "Africell Energy Solar, Aba: hybrid inverters, LiFePO4 lithium batteries and monocrystalline solar panels for homes, shops and businesses across Abia State and the South-East.",
   // TODO: replace with the purchased domain.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.africellsolaraba.com",
-
-  contact: {
-    // TODO: exact street address of the Aba showroom / warehouse.
-    addressLine: "Showroom address to be confirmed",
-    city: "Aba",
-    state: "Abia State",
-    country: "Nigeria",
-    // TODO: real numbers. Phone in display form, WhatsApp in international digits only.
-    phone: "+234 000 000 0000",
-    phoneHref: "tel:+2340000000000",
-    whatsapp: "2340000000000",
-    // TODO: real mailbox on the new domain.
-    email: "sales@africellsolaraba.com",
-    // TODO: confirm opening hours.
-    hours: [
-      { days: "Monday – Friday", time: "8:00am – 6:00pm" },
-      { days: "Saturday", time: "9:00am – 4:00pm" },
-      { days: "Sunday", time: "Closed" },
-    ],
-    // TODO: Google Maps share link / embed for the showroom.
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Aba%2C+Abia+State%2C+Nigeria",
-  },
-
-  social: {
-    // TODO: add real profiles when created.
-    facebook: "",
-    instagram: "",
-    tiktok: "",
-  },
-
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.africellsolaraba.com",
   deyeSiteUrl: "", // TODO: link to the Deye website once it is live.
 } as const;
 
-export function whatsappLink(message?: string) {
-  const base = `https://wa.me/${site.contact.whatsapp}`;
+export interface Contact {
+  businessName: string;
+  addressLine: string;
+  city: string;
+  state: string;
+  country: string;
+  phone: string;
+  /** tel: link, or the contact page while no number is set. */
+  phoneHref: string;
+  /** International digits only, e.g. 2348012345678. Empty until set. */
+  whatsapp: string;
+  email: string;
+  mapUrl: string;
+  hours: { days: string; time: string }[];
+  social: Record<string, string>;
+}
+
+/** WhatsApp chat link with an optional pre-filled message. Falls back to the contact page until a number is set. */
+export function whatsappHref(whatsapp: string, message?: string) {
+  if (!whatsapp) return "/contact";
+  const base = `https://wa.me/${whatsapp}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Calculator } from "lucide-react";
 import { solutions } from "@/data/content";
-import { getCategory } from "@/lib/catalog";
+import { getCatalogue, getCategory } from "@/lib/catalog";
 import { CtaBand, PageHero } from "@/components/ui";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -24,6 +24,7 @@ export default async function SolutionPage({ params }: Params) {
   const { slug } = await params;
   const s = solutions.find((x) => x.slug === slug);
   if (!s) notFound();
+  const catalogue = await getCatalogue();
 
   return (
     <>
@@ -68,7 +69,8 @@ export default async function SolutionPage({ params }: Params) {
           <h2 className="text-3xl font-extrabold">Products for this solution</h2>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {s.categories.map((slug) => {
-              const c = getCategory(slug)!;
+              const c = getCategory(catalogue, slug);
+              if (!c) return null;
               return (
                 <Link key={slug} href={`/products/${slug}`} className="card card-hover group flex items-center gap-5 p-5">
                   <span className="relative size-24 shrink-0 overflow-hidden rounded-xl bg-mist">

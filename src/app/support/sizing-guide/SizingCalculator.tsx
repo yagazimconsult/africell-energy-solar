@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Info, Minus, Plus, RotateCcw } from "lucide-react";
-import { whatsappLink } from "@/config/site";
+import { useContact } from "@/components/ContactProvider";
 import { WhatsAppIcon } from "@/components/icons";
 import { useQuote } from "@/components/quote/QuoteProvider";
 
@@ -39,18 +39,15 @@ const APPLIANCES: Appliance[] = [
 
 const DEFAULTS: Record<string, number> = { bulb: 8, fan: 3, tv: 1, decoder: 1, laptop: 1, charger: 3, fridge: 1 };
 
-const INVERTERS = [
-  { kva: 5, name: "5kVA Hybrid Inverter", href: "/products/inverters/5kva-hybrid-inverter", key: "inverters/5kva-hybrid-inverter", image: "/images/products/inverter-hybrid.webp" },
-  { kva: 7.5, name: "7.5kVA Commercial Inverter", href: "/products/inverters/7-5kva-commercial-inverter", key: "inverters/7-5kva-commercial-inverter", image: "/images/products/inverter-hybrid.webp" },
-  { kva: 10, name: "10kVA Commercial Inverter", href: "/products/inverters/10kva-commercial-inverter", key: "inverters/10kva-commercial-inverter", image: "/images/products/inverter-hybrid.webp" },
-];
-const BATTERIES = [
-  { kwh: 5.12, name: "HY 5.12kWh LiFePO4 Battery", model: "LFP-512100", slug: "hy-lfp-512100-5kwh", image: "/images/products/hy-wall-main.webp" },
-  { kwh: 7.68, name: "HY 7.68kWh LiFePO4 Battery", model: "LFP-512150", slug: "hy-lfp-512150-7kwh", image: "/images/products/hy-wall-main.webp" },
-  { kwh: 10.24, name: "HY 10.24kWh LiFePO4 Battery", model: "LFP-512200", slug: "hy-lfp-512200-10kwh", image: "/images/products/hy-200-main.webp" },
-  { kwh: 15.36, name: "HY 15.36kWh LiFePO4 Battery", model: "LFP-512300", slug: "hy-lfp-512300-15kwh", image: "/images/products/hy-300-main.webp" },
-];
-const PANEL = { watts: 550, name: "550W Monocrystalline Solar Panel", model: "GL-MONO-550W", slug: "gl-mono-550w", image: "/images/products/panel-front.webp" };
+/** A catalogue product the calculator can recommend; rating is kVA, kWh or W. Supplied from Supabase by the page. */
+export interface SizingOption {
+  key: string;
+  name: string;
+  model?: string;
+  href: string;
+  image: string;
+  rating: number;
+}
 
 const PEAK_SUN_HOURS = 4.5; // South-East Nigeria, conservative annual average
 const SYSTEM_LOSSES = 0.75; // heat, dust, wiring, conversion
@@ -58,7 +55,8 @@ const POWER_FACTOR = 0.8; // kW per kVA
 const HEADROOM = 1.25;
 const DOD = 0.9;
 
-export function SizingCalculator() {
+export function SizingCalculator({ inverters, batteries, panel }: { inverters: SizingOption[]; batteries: SizingOption[]; panel: SizingOption }) {
+  const { whatsappLink } = useContact();
   const [qty, setQty] = useState<Record<string, number>>(DEFAULTS);
   const [batteryShare, setBatteryShare] = useState(60);
   const { add } = useQuote();
@@ -74,16 +72,17 @@ export function SizingCalculator() {
     const loadW = selected.reduce((s, a) => s + a.watts * qty[a.id], 0);
     const dailyWh = selected.reduce((s, a) => s + a.watts * a.hours * qty[a.id], 0);
     const kvaNeeded = (loadW * HEADROOM) / POWER_FACTOR / 1000;
-    const inverter = INVERTERS.find((i) => i.kva >= kvaNeeded);
+    const inverter = inverters.find((i) => i.rating >= kvaNeeded);
     const batteryWh = (dailyWh * (batteryShare / 100)) / DOD;
-    const single = BATTERIES.find((b) => b.kwh * 1000 >= batteryWh);
-    const battery = single ? { ...single, count: 1 } : { ...BATTERIES[3], count: Math.ceil(batteryWh / (BATTERIES[3].kwh * 1000)) };
+    const largest = batteries[batteries.length - 1];
+    const single = batteries.find((b) => b.rating * 1000 >= batteryWh);
+    const battery = single ? { ...single, count: 1 } : { ...largest, count: Math.ceil(batteryWh / (largest.rating * 1000)) };
     const arrayW = dailyWh / (PEAK_SUN_HOURS * SYSTEM_LOSSES);
-    const panels = Math.max(1, Math.ceil(arrayW / PANEL.watts));
+    const panels = Math.max(1, Math.ceil(arrayW / panel.rating));
     const motors = selected.some((a) => a.motor);
     const heating = selected.some((a) => a.id === "iron" || a.id === "microwave");
     return { selected, loadW, dailyWh, kvaNeeded, inverter, batteryWh, battery, arrayW, panels, motors, heating };
-  }, [qty, batteryShare]);
+  }, [qty, batteryShare, inverters, batteries, panel]);
 
   const empty = r.selected.length === 0;
 
@@ -91,14 +90,14 @@ export function SizingCalculator() {
     "Hello Africell Solar Aba, I used your sizing guide. My appliances:",
     ...r.selected.map((a) => `- ${qty[a.id]} × ${a.name}`),
     `Estimated load: ${(r.loadW / 1000).toFixed(2)} kW, daily energy: ${(r.dailyWh / 1000).toFixed(1)} kWh.`,
-    `Suggested: ${r.inverter ? r.inverter.name : "10kVA+ / parallel inverters"}, ${r.battery.count} × ${r.battery.name}, ${r.panels} × ${PANEL.name}.`,
+    `Suggested: ${r.inverter ? r.inverter.name : "10kVA+ / parallel inverters"}, ${r.battery.count} × ${r.battery.name}, ${r.panels} × ${panel.name}.`,
     "Please confirm and send me a quote.",
   ].join("\n");
 
   const addAll = () => {
     if (r.inverter) add({ key: r.inverter.key, name: r.inverter.name, href: r.inverter.href, image: r.inverter.image });
-    add({ key: `lithium-batteries/${r.battery.slug}`, name: r.battery.name, model: r.battery.model, href: `/products/lithium-batteries/${r.battery.slug}`, image: r.battery.image }, r.battery.count);
-    add({ key: `solar-panels/${PANEL.slug}`, name: PANEL.name, model: PANEL.model, href: `/products/solar-panels/${PANEL.slug}`, image: PANEL.image }, r.panels);
+    add({ key: r.battery.key, name: r.battery.name, model: r.battery.model, href: r.battery.href, image: r.battery.image }, r.battery.count);
+    add({ key: panel.key, name: panel.name, model: panel.model, href: panel.href, image: panel.image }, r.panels);
     setAdded(true);
   };
 
@@ -164,9 +163,9 @@ export function SizingCalculator() {
             </dl>
 
             <div className="mt-6 space-y-3">
-              <Result label="Inverter" value={empty ? "—" : r.inverter ? `${r.inverter.kva}kVA` : "Above 10kVA"} detail={empty ? "" : r.inverter ? r.inverter.name : "Parallel inverters or a larger system. Talk to us."} href={r.inverter?.href} />
-              <Result label="Battery storage" value={empty ? "—" : `${(r.battery.kwh * r.battery.count).toFixed(2)} kWh`} detail={empty ? "" : `${r.battery.count} × ${r.battery.name}`} href={`/products/lithium-batteries/${r.battery.slug}`} />
-              <Result label="Solar array" value={empty ? "—" : `${((r.panels * PANEL.watts) / 1000).toFixed(2)} kWp`} detail={empty ? "" : `${r.panels} × ${PANEL.name}`} href={`/products/solar-panels/${PANEL.slug}`} />
+              <Result label="Inverter" value={empty ? "—" : r.inverter ? `${r.inverter.rating}kVA` : `Above ${inverters[inverters.length - 1]?.rating ?? 10}kVA`} detail={empty ? "" : r.inverter ? r.inverter.name : "Parallel inverters or a larger system. Talk to us."} href={r.inverter?.href} />
+              <Result label="Battery storage" value={empty ? "—" : `${(r.battery.rating * r.battery.count).toFixed(2)} kWh`} detail={empty ? "" : `${r.battery.count} × ${r.battery.name}`} href={r.battery.href} />
+              <Result label="Solar array" value={empty ? "—" : `${((r.panels * panel.rating) / 1000).toFixed(2)} kWp`} detail={empty ? "" : `${r.panels} × ${panel.name}`} href={panel.href} />
             </div>
 
             {!empty && (r.motors || r.heating) && (
