@@ -1,6 +1,8 @@
 # Africell Energy Solar — Aba website
 
 Next.js 15 (App Router) + Tailwind CSS v4 + Supabase. Site architecture follows deyeinverter.com:
+📋 **Progress log:** see [docs/PROGRESS.md](docs/PROGRESS.md) for what has been done and what is next.
+
 Home · Products (Brand → Category → Series → Model) · Solutions · Support · Download · News · About Us · Contact.
 
 ## Run
