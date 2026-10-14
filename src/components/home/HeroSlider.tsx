@@ -27,6 +27,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
   const regionRef = useRef<HTMLElement>(null);
+  const touchX = useRef<number | null>(null);
 
   const go = useCallback((i: number) => setIndex((i + slides.length) % slides.length), [slides.length]);
 
@@ -67,6 +68,15 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
         if (e.key === "ArrowRight") go(index + 1);
         if (e.key === "ArrowLeft") go(index - 1);
       }}
+      onTouchStart={(e) => {
+        touchX.current = e.touches[0].clientX;
+      }}
+      onTouchEnd={(e) => {
+        if (touchX.current === null) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        touchX.current = null;
+        if (Math.abs(dx) > 50) go(dx < 0 ? index + 1 : index - 1);
+      }}
     >
       {/* Background photos: all stacked, the active one fades in and slowly zooms out. */}
       {slides.map((s, i) => (
@@ -89,7 +99,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/75 to-ink/5" aria-hidden />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-ink to-transparent" aria-hidden />
 
-      <div className="container-x grid min-h-[640px] items-center py-20 md:min-h-[720px]">
+      <div className="container-x grid min-h-[640px] items-center py-20 md:min-h-[720px] lg:pl-24 2xl:pl-8">
         <div key={index} className="max-w-2xl" aria-live={paused ? "polite" : "off"}>
           <p className="animate-fade-up inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-white/85 ring-1 ring-white/15 backdrop-blur">
             <MapPin className="size-3.5 text-sun" aria-hidden /> {slide.eyebrow}
@@ -111,38 +121,55 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
       </div>
 
       {slides.length > 1 && (
-        <div className="container-x absolute inset-x-0 bottom-8 flex items-center justify-between gap-6">
-          <div className="flex flex-1 items-center gap-2" role="tablist" aria-label="Choose slide">
-            {slides.map((s, i) => (
-              <button
-                key={s.image}
-                type="button"
-                role="tab"
-                aria-selected={i === index}
-                aria-label={`Slide ${i + 1}: ${s.title} ${s.highlight}`}
-                onClick={() => go(i)}
-                className="group relative h-1.5 w-12 overflow-hidden rounded-full bg-white/20 sm:w-16"
-              >
-                {i === index && (
-                  <span
-                    key={`${index}-${paused}-${reduced}`}
-                    className={`absolute inset-y-0 left-0 rounded-full bg-sun ${paused || reduced ? "w-full" : "animate-slide-progress"}`}
-                    style={{ animationDuration: `${INTERVAL_MS}ms` }}
-                  />
-                )}
-              </button>
-            ))}
+        <>
+          <div className="container-x absolute inset-x-0 bottom-8 flex items-center justify-between gap-6 lg:pl-24 2xl:pl-8">
+            <div className="flex flex-1 items-center gap-2" role="tablist" aria-label="Choose slide">
+              {slides.map((s, i) => (
+                <button
+                  key={s.image}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === index}
+                  aria-label={`Slide ${i + 1}: ${s.title} ${s.highlight}`}
+                  onClick={() => go(i)}
+                  className="group relative h-1.5 w-12 overflow-hidden rounded-full bg-white/20 sm:w-16"
+                >
+                  {i === index && (
+                    <span
+                      key={`${index}-${paused}-${reduced}`}
+                      className={`absolute inset-y-0 left-0 rounded-full bg-sun ${paused || reduced ? "w-full" : "animate-slide-progress"}`}
+                      style={{ animationDuration: `${INTERVAL_MS}ms` }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+            {/* Phones and tablets: arrows beside the dots (side arrows would cover the headline). */}
+            <div className="flex gap-2 lg:hidden">
+              <ArrowButton direction="prev" onClick={() => go(index - 1)} />
+              <ArrowButton direction="next" onClick={() => go(index + 1)} />
+            </div>
           </div>
-          <div className="flex gap-2">
-            <button type="button" aria-label="Previous slide" onClick={() => go(index - 1)} className="grid size-11 place-items-center rounded-full bg-white/10 ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-white/20">
-              <ChevronLeft className="size-5" aria-hidden />
-            </button>
-            <button type="button" aria-label="Next slide" onClick={() => go(index + 1)} className="grid size-11 place-items-center rounded-full bg-white/10 ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-white/20">
-              <ChevronRight className="size-5" aria-hidden />
-            </button>
-          </div>
-        </div>
+
+          {/* Large screens: previous on the left side, next on the right side, vertically centred. */}
+          <ArrowButton direction="prev" onClick={() => go(index - 1)} className="absolute left-5 top-1/2 hidden -translate-y-1/2 lg:grid xl:left-8" large />
+          <ArrowButton direction="next" onClick={() => go(index + 1)} className="absolute right-5 top-1/2 hidden -translate-y-1/2 lg:grid xl:right-8" large />
+        </>
       )}
     </section>
+  );
+}
+
+function ArrowButton({ direction, onClick, className = "", large = false }: { direction: "prev" | "next"; onClick: () => void; className?: string; large?: boolean }) {
+  const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
+  return (
+    <button
+      type="button"
+      aria-label={direction === "prev" ? "Previous slide" : "Next slide"}
+      onClick={onClick}
+      className={`grid place-items-center rounded-full bg-white/10 ring-1 ring-white/20 backdrop-blur transition-all hover:scale-105 hover:bg-white/20 ${large ? "size-14" : "size-11"} ${className}`}
+    >
+      <Icon className={large ? "size-6" : "size-5"} aria-hidden />
+    </button>
   );
 }

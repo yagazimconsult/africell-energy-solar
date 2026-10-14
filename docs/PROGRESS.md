@@ -49,6 +49,11 @@ only when you say so.)
 
 ## Log
 
+### 2026-10-14 — Slideshow arrows
+- Homepage slideshow arrows moved to the sides like Deye's: previous arrow on the left, next arrow on the
+  right, centred vertically and larger. On phones and tablets they stay small beside the dots (side arrows
+  would cover the headline), and phones can now **swipe** left/right between slides.
+
 ### 2026-10-14 — Labelled WhatsApp requests
 - One WhatsApp number for everything, but **every message now starts with what the customer wants**:
   🛒 PURCHASE / QUOTE REQUEST · 🔧 MAINTENANCE / REPAIR REQUEST · 💬 PRODUCT ENQUIRY ·
