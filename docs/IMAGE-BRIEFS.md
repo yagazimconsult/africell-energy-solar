@@ -20,15 +20,15 @@ After generating, check every image for misspelled "AFRICELL" text before using 
 
 | # | Image | Will be used on | Status |
 |---|---|---|---|
-| 1 | Ultra-modern villa at blue hour, infinity pool, Africell inverter + battery by the entrance | Homepage slide 1, Home Solar page, social share image | ⏳ Queued |
-| 2 | Studio shot: Africell product family on white podiums (inverter, wall battery, floor battery, panels) | Homepage slide 2, About page | ⏳ Queued |
-| 3 | Luxury home technical room: Africell inverter + two Africell wall batteries on a microcement wall | Homepage slide 3 (storage), inverter guide | ⏳ Queued |
-| 4 | Upscale Africell showroom: feature wall of Africell products, AFRICELL sign, advisor with couple | "Why buy from us", About page header | ⏳ Queued |
-| 5 | Modern office building with rooftop solar at golden hour (no equipment shown) | Homepage slide 4, Commercial / Shops & SMEs pages | ⏳ Queued |
-| 6 | Family in a luxury living room, lights on during a city blackout, Africell battery in background | Home Solar page, battery guide | ⏳ Queued |
+| 1 | Ultra-modern villa at blue hour, infinity pool, Africell inverter + battery by the entrance | Homepage slide 1, Home Solar page, social share image | ✅ Live — homepage slide 1, social share image, panels guide |
+| 2 | Studio shot: Africell product family on white podiums (inverter, wall battery, floor battery, panels) | Homepage slide 2, About page | ✅ Live — homepage slide 2, About page, inverter guide |
+| 3 | Luxury home technical room: Africell inverter + two Africell wall batteries on a microcement wall | Homepage slide 3 (storage), inverter guide | ⏳ Queued (daily limit) — next session |
+| 4 | Upscale Africell showroom: feature wall of Africell products, AFRICELL sign, advisor with couple | "Why buy from us", About page header | ✅ Live — homepage slide 4, "Why buy from us", About header, Shops & SMEs page |
+| 5 | Modern office building with rooftop solar at golden hour (no equipment shown) | Homepage slide 4, Commercial / Shops & SMEs pages | ✅ Live — homepage slide 3, Commercial page |
+| 6 | Family in a luxury living room, lights on during a city blackout, Africell battery in background | Home Solar page, battery guide | ✅ Live — Home Solar page |
 
-The five images generated earlier (Nigerian house at dusk, utility room, campus, installers, showroom)
-stay live until these replace them. They were judged too plain and the equipment was unbranded.
+The five plain images generated on 2026-10-13 are no longer used anywhere on the site. Every AFRICELL
+wordmark in the live images was zoom-checked for correct spelling.
 
 ## Prompts
 

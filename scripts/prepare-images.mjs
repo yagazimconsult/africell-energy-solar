@@ -79,7 +79,9 @@ const jobs = [
 
 // Original imagery generated for this site (Higgsfield / GPT Image 2.5), kept in _source/generated.
 const GEN = "_source/generated";
-for (const name of ["hero-house-dusk", "installers", "campus-aerial", "utility-room", "showroom"]) {
+for (const name of ["hero-house-dusk", "installers", "campus-aerial", "utility-room", "showroom",
+  // Premium Africell-branded set (2026-10-14), see docs/IMAGE-BRIEFS.md
+  "villa", "product-family", "showroom-africell", "office-rooftop", "family-outage"]) {
   jobs.push(() => save(sharp(path.join(GEN, `gen-${name}.png`)), `site/gen-${name}.webp`, { width: 2000, quality: 80 }));
 }
 

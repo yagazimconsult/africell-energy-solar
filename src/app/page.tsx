@@ -10,8 +10,8 @@ import { HeroSlider, type HeroSlide } from "@/components/home/HeroSlider";
 // Homepage slideshow. Photos are original images generated for this site.
 const SLIDES: HeroSlide[] = [
   {
-    image: "/images/site/gen-hero-house-dusk.webp",
-    focus: "70% center",
+    image: "/images/site/gen-villa.webp",
+    focus: "65% center",
     eyebrow: "Now in Aba, Abia State",
     title: "Power that stays on,",
     highlight: "day and night.",
@@ -20,17 +20,17 @@ const SLIDES: HeroSlide[] = [
     secondary: { label: "Size my system", href: "/support/sizing-guide" },
   },
   {
-    image: "/images/site/gen-utility-room.webp",
-    focus: "60% center",
-    eyebrow: "LiFePO4 lithium storage",
-    title: "Quiet, clean power",
-    highlight: "through every outage.",
-    text: "HY Series batteries from 5.12kWh to 15.36kWh, with a built-in BMS, at least 6,000 cycles and room to expand to 16 packs.",
-    primary: { label: "View batteries", href: "/products/lithium-batteries" },
+    image: "/images/site/gen-product-family.webp",
+    focus: "70% center",
+    eyebrow: "The Africell Premium range",
+    title: "One family of products,",
+    highlight: "built to work together.",
+    text: "Hybrid inverters, wall-mounted and floor-standing LiFePO4 batteries from 5.12kWh to 15.36kWh, and solar panels from 180W to 650W.",
+    primary: { label: "View the range", href: "/products" },
     secondary: { label: "How much storage do I need?", href: "/support/sizing-guide" },
   },
   {
-    image: "/images/site/gen-campus-aerial.webp",
+    image: "/images/site/gen-office-rooftop.webp",
     focus: "60% center",
     eyebrow: "Business & institutions",
     title: "Solar that scales",
@@ -40,14 +40,14 @@ const SLIDES: HeroSlide[] = [
     secondary: { label: "Request a quote", href: "/quote" },
   },
   {
-    image: "/images/site/gen-installers.webp",
-    focus: "55% center",
-    eyebrow: "Monocrystalline solar panels",
-    title: "Harvest the sunshine,",
-    highlight: "from 180W to 650W.",
-    text: "GL-MONO panels in ten power ratings, so your array fits your roof and your energy needs.",
-    primary: { label: "View solar panels", href: "/products/solar-panels" },
-    secondary: { label: "Talk to our team", href: "/contact" },
+    image: "/images/site/gen-showroom-africell.webp",
+    focus: "60% center",
+    eyebrow: "Genuine Africell products",
+    title: "Expert advice,",
+    highlight: "right here in Aba.",
+    text: "Talk to our team about the right inverter, battery and panels for your home or business, and get a quote the same day.",
+    primary: { label: "Talk to our team", href: "/contact" },
+    secondary: { label: "Request a quote", href: "/quote" },
   },
 ];
 
@@ -156,7 +156,7 @@ export default async function HomePage() {
 
       {/* Why us */}
       <section className="relative overflow-hidden bg-ink py-20 text-white md:py-28">
-        <Image src="/images/site/gen-showroom.webp" alt="" fill sizes="100vw" className="object-cover opacity-[0.16]" />
+        <Image src="/images/site/gen-showroom-africell.webp" alt="" fill sizes="100vw" className="object-cover opacity-[0.16]" />
         <div className="container-x relative grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:items-center">
           <div>
             <p className="eyebrow !text-sun">Why buy from us</p>

@@ -28,7 +28,7 @@ only when you say so.)
 | Enquiry & quote forms saved to Supabase | ✅ Done |
 | Sizing calculator (appliances → inverter, battery, panels) | ✅ Done |
 | Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
-| Premium Africell-branded photos (modern homes, studio shots, showroom) | ⏳ 6 planned, queued (generator daily limit) |
+| Premium Africell-branded photos (modern homes, studio shots, showroom) | ✅ 5 of 6 live · 1 queued (generator daily limit) |
 | Phone, WhatsApp, email, address | ⏳ Placeholders (by your choice, for now) |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
@@ -36,17 +36,27 @@ only when you say so.)
 
 ---
 
-## Next up (queued — image generator hit its daily limit)
+## Next up
 
-**New image direction (your feedback):** the first generated photos were too plain. All site photos
-will be redone as **modern, premium images** (luxury villa, studio product shots, upscale showroom),
-and **every inverter and battery shown will be a real Africell unit with "Premium AFRICELL" on it**,
-in the style of the Lagos Africell banners. Six images are planned. See
-[IMAGE-BRIEFS.md](IMAGE-BRIEFS.md) for each image, where it will be used, and its status.
+- Technical-room photo (Africell inverter + two Africell batteries on a luxury microcement wall):
+  the image account allows about five images a day, so it is first in the next session.
+- See [IMAGE-BRIEFS.md](IMAGE-BRIEFS.md) for the full image plan.
 
 ---
 
 ## Log
+
+### 2026-10-14 — Premium Africell images live
+- Generated 5 premium images in the style of the Lagos Africell banners, with every inverter and battery
+  drawn from photos of the real Africell units and showing the "Premium AFRICELL" name:
+  ultra-modern villa at dusk, Africell product family on studio podiums, modern office with rooftop solar,
+  upscale Africell showroom, family at home during a blackout.
+- Zoom-checked all AFRICELL lettering: spelled correctly everywhere (the 15kWh battery even reads
+  "LiFePO4 BATTERY 51.2V300AH", matching the real label).
+- New homepage slideshow: villa → product family → office → showroom. Also updated the Home Solar,
+  Shops & SMEs and Commercial pages, the About page, the "Why buy from us" band, two guides and the
+  image shown when the site is shared on WhatsApp/social media.
+- Removed every one of yesterday's plain images from the site.
 
 ### 2026-10-13 — Slideshow, scroll animations and our own photos
 - Homepage hero is now a Deye-style slideshow: 4 slides that crossfade every 7 seconds with a slow
