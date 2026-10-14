@@ -45,6 +45,7 @@ export function buildNav(categories: MenuCategory[]): NavItem[] {
       children: [
         { label: "System Sizing Guide", href: "/support/sizing-guide", description: "Estimate the inverter, battery and panels you need." },
         { label: "FAQs", href: "/support/faq", description: "Answers to the questions customers ask most." },
+        { label: "Maintenance & Repair", href: "/support/maintenance", description: "Request our technical team for a repair or check-up." },
         { label: "Warranty & After-sales", href: "/support/warranty", description: "How warranty and service work with us." },
       ],
     },

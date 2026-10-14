@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { ClipboardCheck, FileCheck2, Phone, ShieldAlert } from "lucide-react";
+import Link from "next/link";
+import { ClipboardCheck, FileCheck2, Phone, ShieldAlert, Wrench } from "lucide-react";
 import { CtaBand, PageHero } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -38,6 +39,12 @@ export default function WarrantyPage() {
             </li>
           ))}
         </ol>
+        <div className="mt-8 flex flex-col items-start gap-4 rounded-2xl bg-mist p-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[15px] font-semibold">Need a repair or a check-up?</p>
+          <Link href="/support/maintenance" className="btn btn-sun">
+            <Wrench className="size-4" aria-hidden /> Request a technician
+          </Link>
+        </div>
       </section>
       <CtaBand title="Need help with a product?" text="Contact our Aba team with your invoice details and we will take it from there." />
     </>

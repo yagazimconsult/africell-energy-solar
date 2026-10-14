@@ -15,8 +15,16 @@ interface EnquiryBody {
   message?: string;
   items?: { name: string; model?: string; qty: number }[];
   sourcePage?: string;
+  /** "contact" | "quote" | "maintenance" */
+  requestType?: string;
+  /** Short reference shown to the customer (e.g. Q-1014-4821). */
+  reference?: string;
+  /** Extra labelled details (purchase type, urgency, product…). */
+  details?: Record<string, unknown>;
   website?: string; // honeypot
 }
+
+const REQUEST_LABELS: Record<string, string> = { quote: "QUOTE REQUEST", maintenance: "MAINTENANCE / REPAIR REQUEST", contact: "ENQUIRY" };
 
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
@@ -35,7 +43,24 @@ export async function POST(req: Request) {
   const phone = clean(body.phone, 40).replace(/\s+/g, " ");
   const email = clean(body.email, 160).toLowerCase();
   const location = clean(body.location, 160);
-  const message = clean(body.message, 4000);
+  const requestType = body.requestType && body.requestType in REQUEST_LABELS ? body.requestType : "contact";
+  const reference = /^[QME]-\d{4}-\d{4}$/.test(String(body.reference ?? "")) ? String(body.reference) : "";
+  const details =
+    body.details && typeof body.details === "object"
+      ? Object.entries(body.details)
+          .slice(0, 12)
+          .map(([k, v]) => [clean(k, 60), clean(v, 600)] as const)
+          .filter(([k, v]) => k && v)
+      : [];
+  // Request type, reference and details are kept in the message so the team sees everything in one place.
+  const message = [
+    `[${REQUEST_LABELS[requestType]}${reference ? ` · Ref ${reference}` : ""}]`,
+    ...details.map(([k, v]) => `${k}: ${v}`),
+    clean(body.message, 3000),
+  ]
+    .filter(Boolean)
+    .join("\n")
+    .slice(0, 4000);
   const sourcePage = clean(body.sourcePage, 300);
   const items = Array.isArray(body.items)
     ? body.items.slice(0, 50).map((i) => ({ name: clean(i?.name, 160), model: clean(i?.model, 80) || undefined, qty: Math.max(1, Math.min(999, Number(i?.qty) || 1)) }))
@@ -49,7 +74,7 @@ export async function POST(req: Request) {
   }
 
   const { error } = await supabase.from("enquiries").insert({
-    kind: items.length ? "quote" : "contact",
+    kind: requestType === "quote" || items.length ? "quote" : "contact",
     name,
     phone,
     email: email || null,
@@ -85,7 +110,7 @@ export async function POST(req: Request) {
           from,
           to: [to],
           reply_to: email || undefined,
-          subject: `${items.length ? "Quote request" : "Website enquiry"} from ${name}`,
+          subject: `${REQUEST_LABELS[requestType].toLowerCase().replace(/^./, (c) => c.toUpperCase())}${reference ? ` ${reference}` : ""} from ${name}`,
           text: lines.join("\n"),
         }),
       });

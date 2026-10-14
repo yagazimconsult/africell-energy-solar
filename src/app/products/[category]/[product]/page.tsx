@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AlertCircle, BadgeCheck, Check, FileText, MapPin, Package, Phone, ShieldCheck, Wrench } from "lucide-react";
+
+const SERVICE_PRODUCT: Record<string, string> = { inverters: "Inverter", "lithium-batteries": "Lithium battery", "solar-panels": "Solar panels" };
 import { site, whatsappHref } from "@/config/site";
 import { getContact } from "@/lib/site-settings";
 import { availabilityLabel, compatibleProducts, getCatalogue, getProduct, productHref, relatedProducts, toCard } from "@/lib/catalog";
@@ -133,9 +135,14 @@ export default async function ProductPage({ params }: Params) {
               <WhatsAppIcon className="size-4" /> Enquire on WhatsApp
             </a>
           </div>
-          <a href={contact.phoneHref} className="mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-muted hover:text-ink">
-            <Phone className="size-4" aria-hidden /> Or call {contact.phone}
-          </a>
+          <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+            <a href={contact.phoneHref} className="inline-flex items-center gap-2 text-[14px] font-semibold text-muted hover:text-ink">
+              <Phone className="size-4" aria-hidden /> Or call {contact.phone}
+            </a>
+            <Link href={`/support/maintenance?product=${encodeURIComponent(SERVICE_PRODUCT[cat.slug] ?? "")}`} className="inline-flex items-center gap-2 text-[14px] font-semibold text-muted hover:text-ink">
+              <Wrench className="size-4" aria-hidden /> Already own one? Request service
+            </Link>
+          </div>
 
           <ul className="mt-8 grid gap-3 border-t border-line pt-6 text-[14px] sm:grid-cols-3">
             {[

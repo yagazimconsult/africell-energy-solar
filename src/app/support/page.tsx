@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Calculator, FileText, HelpCircle, ShieldCheck } from "lucide-react";
+import { ArrowRight, Calculator, FileText, HelpCircle, ShieldCheck, Wrench } from "lucide-react";
 import { CtaBand, PageHero } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 const items = [
   { icon: Calculator, title: "System sizing guide", text: "Estimate the inverter, battery and panels for your load.", href: "/support/sizing-guide" },
   { icon: HelpCircle, title: "Frequently asked questions", text: "Buying, choosing a system and after-sales.", href: "/support/faq" },
+  { icon: Wrench, title: "Maintenance & repair", text: "Request our technical team for a repair or check-up.", href: "/support/maintenance" },
   { icon: ShieldCheck, title: "Warranty & after-sales", text: "How warranty and service work with us.", href: "/support/warranty" },
   { icon: FileText, title: "Downloads", text: "Datasheets, settings and manuals.", href: "/downloads" },
 ];

@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Calculator, Minus, Plus, Trash2 } from "lucide-react";
 import { useQuote } from "@/components/quote/QuoteProvider";
 import { EnquiryForm } from "@/components/EnquiryForm";
 
 export function QuoteList() {
-  const { items, setQty, remove, clear } = useQuote();
+  const { items, sizing, setQty, remove, clear, setSizing } = useQuote();
 
   return (
     <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
@@ -59,13 +59,48 @@ export function QuoteList() {
             ))}
           </ul>
         )}
+
+        {sizing ? (
+          <div className="mt-6 rounded-2xl bg-brand-50 p-5 ring-1 ring-brand/15">
+            <div className="flex items-start justify-between gap-4">
+              <p className="flex items-center gap-2 font-semibold text-navy-2">
+                <Calculator className="size-4" aria-hidden /> Your sizing estimate
+              </p>
+              <button type="button" onClick={() => setSizing(null)} className="text-[13px] font-semibold text-muted hover:text-ink">
+                Remove
+              </button>
+            </div>
+            <dl className="mt-3 grid grid-cols-2 gap-3 text-[14px]">
+              <div>
+                <dt className="text-muted">Running load</dt>
+                <dd className="font-bold">{sizing.loadKw} kW</dd>
+              </div>
+              <div>
+                <dt className="text-muted">Daily energy</dt>
+                <dd className="font-bold">{sizing.dailyKwh} kWh</dd>
+              </div>
+            </dl>
+            <p className="mt-3 text-[13.5px] leading-relaxed text-ink/75">{sizing.appliances.join(", ")}</p>
+            <p className="mt-2 text-[12.5px] text-muted">Sent with your request so our team can confirm the right system.</p>
+          </div>
+        ) : (
+          <Link href="/support/sizing-guide" className="mt-6 flex items-center gap-3 rounded-2xl p-5 ring-1 ring-line transition-colors hover:bg-mist">
+            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-sun-50 text-sun-2">
+              <Calculator className="size-5" aria-hidden />
+            </span>
+            <span>
+              <span className="block font-semibold">Not sure what you need?</span>
+              <span className="block text-[13.5px] text-muted">Use the sizing calculator, then add the suggested system here.</span>
+            </span>
+          </Link>
+        )}
       </div>
 
       <div className="rounded-[1.75rem] bg-mist p-6 md:p-8">
         <h2 className="text-2xl font-extrabold">Your details</h2>
-        <p className="mt-1.5 text-[14.5px] text-muted">We will reply with current prices and availability.</p>
+        <p className="mt-1.5 text-[14.5px] text-muted">Choose small or bulk purchase. We confirm prices and availability on WhatsApp, then send you an invoice. No payment is taken on this website.</p>
         <div className="mt-6">
-          <EnquiryForm items={items.map(({ name, model, qty }) => ({ name, model, qty }))} onSent={clear} submitLabel="Request quote" />
+          <EnquiryForm mode="quote" items={items.map(({ name, model, qty }) => ({ name, model, qty }))} sizing={sizing} onSent={clear} />
         </div>
       </div>
     </div>

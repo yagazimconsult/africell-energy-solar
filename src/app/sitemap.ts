@@ -6,7 +6,7 @@ import { getCatalogue, productHref } from "@/lib/catalog";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { categories, allProducts } = await getCatalogue();
   const now = new Date();
-  const pages = ["", "/products", "/solutions", "/support", "/support/sizing-guide", "/support/faq", "/support/warranty", "/downloads", "/news", "/about", "/contact", "/quote", "/privacy", "/terms"];
+  const pages = ["", "/products", "/solutions", "/support", "/support/sizing-guide", "/support/faq", "/support/warranty", "/support/maintenance", "/downloads", "/news", "/about", "/contact", "/quote", "/privacy", "/terms"];
   return [
     ...pages.map((p) => ({ url: `${site.url}${p}`, lastModified: now, priority: p === "" ? 1 : 0.7 })),
     ...categories.map((c) => ({ url: `${site.url}/products/${c.slug}`, lastModified: now, priority: 0.9 })),

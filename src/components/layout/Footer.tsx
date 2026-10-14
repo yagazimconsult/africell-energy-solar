@@ -38,6 +38,7 @@ export async function Footer() {
               { label: "News & Guides", href: "/news" },
               { label: "Downloads", href: "/downloads" },
               { label: "FAQs", href: "/support/faq" },
+              { label: "Maintenance & Repair", href: "/support/maintenance" },
               { label: "Warranty & After-sales", href: "/support/warranty" },
               { label: "Contact", href: "/contact" },
             ]}

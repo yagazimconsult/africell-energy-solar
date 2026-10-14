@@ -27,6 +27,8 @@ only when you say so.)
 | Product data stored in Supabase (Africell project) | ✅ Done |
 | Enquiry & quote forms saved to Supabase | ✅ Done |
 | Sizing calculator (appliances → inverter, battery, panels) | ✅ Done |
+| Quote: calculator → quote list → small/bulk purchase → WhatsApp customer care → invoice | ✅ Done |
+| Maintenance & repair requests → WhatsApp technical team | ✅ Done |
 | Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
 | Premium Africell-branded photos (modern homes, studio shots, showroom) | ✅ 5 of 6 live · 1 queued (generator daily limit) |
 | Phone, WhatsApp, email, address | ⏳ Placeholders (by your choice, for now) |
@@ -45,6 +47,20 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-10-14 — Quote flow and maintenance requests
+- **Quote:** the sizing calculator's result (appliances, load, daily energy) now travels to the quote
+  page together with the suggested products; quantities can be changed there. The quote form asks for
+  **Small purchase or Bulk purchase** and whether **installation** is needed.
+- After sending, the customer gets a **reference number** (e.g. Q-1014-4416), a clear "how payment works"
+  note (no payment on the website; pay against the invoice sent by our team) and is taken to
+  **WhatsApp customer care** with the whole quote already typed in.
+- **Maintenance & repair:** new page (Support → Maintenance & Repair) where customers choose the product,
+  urgency, describe the problem and pick a visit date; they get a reference (M-…) and continue on
+  **WhatsApp with the technical team**. Linked from the menu, footer, Support, Warranty and every
+  product page ("Already own one? Request service").
+- Every request is saved in the database with its reference and details. No database changes were needed.
+- WhatsApp hand-off goes to the Contact page until the real WhatsApp number is added.
 
 ### 2026-10-14 — Premium Africell images live
 - Generated 5 premium images in the style of the Lagos Africell banners, with every inverter and battery

@@ -59,7 +59,7 @@ export function SizingCalculator({ inverters, batteries, panel }: { inverters: S
   const { whatsappLink } = useContact();
   const [qty, setQty] = useState<Record<string, number>>(DEFAULTS);
   const [batteryShare, setBatteryShare] = useState(60);
-  const { add } = useQuote();
+  const { add, setSizing } = useQuote();
   const [added, setAdded] = useState(false);
 
   const change = (id: string, d: number) => {
@@ -98,6 +98,12 @@ export function SizingCalculator({ inverters, batteries, panel }: { inverters: S
     if (r.inverter) add({ key: r.inverter.key, name: r.inverter.name, href: r.inverter.href, image: r.inverter.image });
     add({ key: r.battery.key, name: r.battery.name, model: r.battery.model, href: r.battery.href, image: r.battery.image }, r.battery.count);
     add({ key: panel.key, name: panel.name, model: panel.model, href: panel.href, image: panel.image }, r.panels);
+    setSizing({
+      appliances: r.selected.map((a) => `${qty[a.id]} × ${a.name}`),
+      loadKw: (r.loadW / 1000).toFixed(2),
+      dailyKwh: (r.dailyWh / 1000).toFixed(1),
+      batteryShare,
+    });
     setAdded(true);
   };
 
@@ -183,7 +189,7 @@ export function SizingCalculator({ inverters, batteries, panel }: { inverters: S
               </button>
               {added && (
                 <Link href="/quote" className="btn btn-glass w-full">
-                  View quote list
+                  Review quantities &amp; request quote →
                 </Link>
               )}
               <a href={empty ? undefined : whatsappLink(summary)} target="_blank" rel="noopener noreferrer" aria-disabled={empty} className={`btn btn-whatsapp w-full ${empty ? "pointer-events-none opacity-50" : ""}`}>
