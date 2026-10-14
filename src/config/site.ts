@@ -35,3 +35,24 @@ export function whatsappHref(whatsapp: string, message?: string) {
   const base = `https://wa.me/${whatsapp}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
+
+/**
+ * Every WhatsApp message starts with a labelled request type, so the team can see at a glance
+ * whether a chat is a purchase, a repair, a product question or something else.
+ */
+export const WA_TOPICS = {
+  purchase: { emoji: "🛒", label: "PURCHASE / QUOTE REQUEST", option: "Buy products or get a quote", line: "I'd like to buy solar products / get a quote." },
+  maintenance: { emoji: "🔧", label: "MAINTENANCE / REPAIR REQUEST", option: "Maintenance or repair", line: "I need maintenance or a repair for my solar system." },
+  product: { emoji: "💬", label: "PRODUCT ENQUIRY", option: "Question about a product", line: "I have a question about one of your products." },
+  datasheet: { emoji: "📄", label: "DATASHEET REQUEST", option: "Datasheet or manual", line: "Please send me a product datasheet / manual." },
+  general: { emoji: "❓", label: "GENERAL ENQUIRY", option: "Something else", line: "I have an enquiry." },
+} as const;
+
+export type WaTopic = keyof typeof WA_TOPICS;
+
+/** Builds a labelled WhatsApp message: request-type header, greeting, then the given lines. */
+export function waMessage(topic: WaTopic, ...lines: (string | false | null | undefined)[]) {
+  const t = WA_TOPICS[topic];
+  const body = lines.filter(Boolean) as string[];
+  return [`${t.emoji} *${t.label}*`, "", "Hello Africell Solar Aba,", ...(body.length ? body : [t.line])].join("\n");
+}

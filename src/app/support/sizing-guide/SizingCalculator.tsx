@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Info, Minus, Plus, RotateCcw } from "lucide-react";
 import { useContact } from "@/components/ContactProvider";
+import { waMessage } from "@/config/site";
 import { WhatsAppIcon } from "@/components/icons";
 import { useQuote } from "@/components/quote/QuoteProvider";
 
@@ -86,13 +87,14 @@ export function SizingCalculator({ inverters, batteries, panel }: { inverters: S
 
   const empty = r.selected.length === 0;
 
-  const summary = [
-    "Hello Africell Solar Aba, I used your sizing guide. My appliances:",
+  const summary = waMessage(
+    "purchase",
+    "I used your sizing guide. My appliances:",
     ...r.selected.map((a) => `- ${qty[a.id]} × ${a.name}`),
     `Estimated load: ${(r.loadW / 1000).toFixed(2)} kW, daily energy: ${(r.dailyWh / 1000).toFixed(1)} kWh.`,
     `Suggested: ${r.inverter ? r.inverter.name : "10kVA+ / parallel inverters"}, ${r.battery.count} × ${r.battery.name}, ${r.panels} × ${panel.name}.`,
     "Please confirm and send me a quote.",
-  ].join("\n");
+  );
 
   const addAll = () => {
     if (r.inverter) add({ key: r.inverter.key, name: r.inverter.name, href: r.inverter.href, image: r.inverter.image });

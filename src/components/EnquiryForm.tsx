@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Loader2, Send } from "lucide-react";
 import { useContact } from "@/components/ContactProvider";
+import { waMessage } from "@/config/site";
 import { WhatsAppIcon } from "@/components/icons";
 import { inputClass, makeReference, postEnquiry, SentPanel } from "@/components/forms/shared";
 import type { SizingSummary } from "@/components/quote/QuoteProvider";
@@ -53,8 +54,8 @@ export function EnquiryForm({
   const installationLabel = { yes: "Yes", no: "No", unsure: "Not sure yet" }[installation];
 
   const whatsappText = (reference?: string) =>
-    [
-      "Hello Africell Solar Aba,",
+    waMessage(
+      quote ? "purchase" : "general",
       quote ? `I'd like a quote${reference ? ` (ref ${reference})` : ""}.` : `I'd like to make an enquiry${reference ? ` (ref ${reference})` : ""}.`,
       quote && `Purchase type: ${purchaseLabel}`,
       quote && `Installation needed: ${installationLabel}`,
@@ -63,9 +64,7 @@ export function EnquiryForm({
       form.message && `\n${form.message}`,
       form.name && `\nName: ${form.name}`,
       form.location && `Location: ${form.location}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
+    );
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();

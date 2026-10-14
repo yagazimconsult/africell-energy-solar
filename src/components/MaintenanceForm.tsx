@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Loader2, Wrench } from "lucide-react";
 import { useContact } from "@/components/ContactProvider";
+import { waMessage } from "@/config/site";
 import { inputClass, makeReference, postEnquiry, SentPanel } from "@/components/forms/shared";
 
 const PRODUCTS = ["Inverter", "Lithium battery", "Solar panels", "Complete solar system", "Other / not sure"];
@@ -50,15 +51,14 @@ export function MaintenanceForm({ defaultProduct = "" }: { defaultProduct?: stri
     };
     try {
       await postEnquiry({ name: form.name, phone: form.phone, email: form.email, location: form.location, message: form.message, website: form.website, requestType: "maintenance", reference, details });
-      const text = [
-        `Hello Africell Solar Aba technical team, I need maintenance / repair (ref ${reference}).`,
+      const text = waMessage(
+        "maintenance",
+        `I need maintenance / repair (ref ${reference}).`,
         ...Object.entries(details).map(([k, v]) => `${k}: ${v}`),
         `\nProblem: ${form.message}`,
         `\nName: ${form.name}`,
         form.location && `Location: ${form.location}`,
-      ]
-        .filter(Boolean)
-        .join("\n");
+      );
       setStatus({ kind: "sent", reference, whatsapp: whatsappLink(text) });
     } catch (err) {
       setStatus({ kind: "error", message: err instanceof Error ? err.message : "Something went wrong." });

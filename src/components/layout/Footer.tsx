@@ -3,7 +3,8 @@ import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { getCatalogue } from "@/lib/catalog";
 import { getContact } from "@/lib/site-settings";
 import { solutions } from "@/data/content";
-import { site, whatsappHref } from "@/config/site";
+import { site } from "@/config/site";
+import { WhatsAppChooser } from "@/components/WhatsAppChooser";
 import { Logo } from "@/components/Logo";
 import { WhatsAppIcon } from "@/components/icons";
 
@@ -20,9 +21,9 @@ export async function Footer() {
               Africell inverters, lithium batteries and solar panels, sold and supported locally in Aba, Abia State.
             </p>
             <div className="mt-6 flex gap-2">
-              <a href={whatsappHref(contact.whatsapp)} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp !px-4 !py-2.5 !text-[13px]">
+              <WhatsAppChooser className="btn btn-whatsapp !px-4 !py-2.5 !text-[13px]">
                 <WhatsAppIcon className="size-4" /> WhatsApp
-              </a>
+              </WhatsAppChooser>
               <a href={contact.phoneHref} className="btn btn-glass !px-4 !py-2.5 !text-[13px]">
                 <Phone className="size-4" aria-hidden /> Call us
               </a>

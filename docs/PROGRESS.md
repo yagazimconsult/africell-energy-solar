@@ -29,6 +29,7 @@ only when you say so.)
 | Sizing calculator (appliances → inverter, battery, panels) | ✅ Done |
 | Quote: calculator → quote list → small/bulk purchase → WhatsApp customer care → invoice | ✅ Done |
 | Maintenance & repair requests → WhatsApp technical team | ✅ Done |
+| One WhatsApp number, every message labelled (purchase, maintenance, product, datasheet, general) | ✅ Done |
 | Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
 | Premium Africell-branded photos (modern homes, studio shots, showroom) | ✅ 5 of 6 live · 1 queued (generator daily limit) |
 | Phone, WhatsApp, email, address | ⏳ Placeholders (by your choice, for now) |
@@ -47,6 +48,15 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-10-14 — Labelled WhatsApp requests
+- One WhatsApp number for everything, but **every message now starts with what the customer wants**:
+  🛒 PURCHASE / QUOTE REQUEST · 🔧 MAINTENANCE / REPAIR REQUEST · 💬 PRODUCT ENQUIRY ·
+  📄 DATASHEET REQUEST · ❓ GENERAL ENQUIRY.
+- General WhatsApp buttons (floating green button, header, footer, mobile menu, Contact page, call-to-action
+  bands) now first ask **"What do you need?"** and open WhatsApp with the right label already typed in.
+- Buttons that already know the reason (product pages, datasheet requests, quote form, service form,
+  sizing calculator) go straight to WhatsApp with the matching label.
 
 ### 2026-10-14 — Quote flow and maintenance requests
 - **Quote:** the sizing calculator's result (appliances, load, daily energy) now travels to the quote

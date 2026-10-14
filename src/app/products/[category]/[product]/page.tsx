@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { AlertCircle, BadgeCheck, Check, FileText, MapPin, Package, Phone, ShieldCheck, Wrench } from "lucide-react";
 
 const SERVICE_PRODUCT: Record<string, string> = { inverters: "Inverter", "lithium-batteries": "Lithium battery", "solar-panels": "Solar panels" };
-import { site, whatsappHref } from "@/config/site";
+import { site, waMessage, whatsappHref } from "@/config/site";
 import { getContact } from "@/lib/site-settings";
 import { availabilityLabel, compatibleProducts, getCatalogue, getProduct, productHref, relatedProducts, toCard } from "@/lib/catalog";
 import { Gallery } from "@/components/product/Gallery";
@@ -59,7 +59,7 @@ export default async function ProductPage({ params }: Params) {
   const compatible = compatibleProducts(catalogue, entry);
   const hasGuide = Boolean(series.guide?.length);
   const visibleSections = sections.filter((s) => (s.id === "installation" ? hasGuide : true));
-  const enquiry = `Hello Africell Solar Aba, I'm interested in the ${p.name}${p.model ? ` (${p.model})` : ""}. Please send me a quote and availability.\n${url}`;
+  const enquiry = waMessage("product", `I'm interested in the ${p.name}${p.model ? ` (${p.model})` : ""}. Please send me the price and availability.`, url);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -316,7 +316,7 @@ export default async function ProductPage({ params }: Params) {
                 The datasheet and user manual for this product are available on request.
               </p>
               <a
-                href={whatsappHref(contact.whatsapp, `Hello, please send me the datasheet and manual for the ${p.name}${p.model ? ` (${p.model})` : ""}.`)}
+                href={whatsappHref(contact.whatsapp, waMessage("datasheet", `Please send me the datasheet and manual for the ${p.name}${p.model ? ` (${p.model})` : ""}.`))}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-ghost shrink-0"

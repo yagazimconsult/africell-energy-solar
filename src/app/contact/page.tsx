@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import { site, whatsappHref } from "@/config/site";
+import { site } from "@/config/site";
+import { WhatsAppChooser } from "@/components/WhatsAppChooser";
 import { getContact } from "@/lib/site-settings";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import { WhatsAppIcon } from "@/components/icons";
@@ -16,7 +17,6 @@ export default async function ContactPage() {
   const contact = await getContact();
   const cards = [
     { icon: Phone, title: "Call us", lines: [contact.phone], href: contact.phoneHref, cta: "Call now" },
-    { icon: WhatsAppIcon, title: "WhatsApp", lines: ["Fastest way to reach our team"], href: whatsappHref(contact.whatsapp, "Hello Africell Solar Aba,"), cta: "Start chat", external: true },
     { icon: Mail, title: "Email", lines: [contact.email], href: `mailto:${contact.email}`, cta: "Send email" },
     { icon: MapPin, title: "Visit the showroom", lines: [contact.addressLine, `${contact.city}, ${contact.state}`], href: contact.mapUrl, cta: "Get directions", external: true },
   ];
@@ -26,6 +26,14 @@ export default async function ContactPage() {
       <PageHero eyebrow="Contact" title="Talk to our Aba team" intro="Questions about a product, a system for your home or business, or an existing installation? We're here to help." crumbs={[{ label: "Contact" }]} />
 
       <section className="container-x relative z-10 -mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <WhatsAppChooser className="card card-hover flex flex-col p-6 text-left">
+          <span className="grid size-11 place-items-center rounded-xl bg-brand-50 text-brand">
+            <WhatsAppIcon className="size-5" />
+          </span>
+          <span className="mt-4 block text-[17px] font-bold">WhatsApp</span>
+          <span className="mt-1 block text-[14.5px] text-muted">Fastest way to reach our team: purchases, repairs and questions</span>
+          <span className="mt-auto block pt-4 text-[14px] font-semibold text-brand">Start chat →</span>
+        </WhatsAppChooser>
         {cards.map((c) => (
           <a key={c.title} href={c.href} {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="card card-hover flex flex-col p-6">
             <span className="grid size-11 place-items-center rounded-xl bg-brand-50 text-brand">

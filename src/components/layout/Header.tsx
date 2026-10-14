@@ -10,6 +10,7 @@ import { useContact } from "@/components/ContactProvider";
 import { Logo } from "@/components/Logo";
 import { WhatsAppIcon } from "@/components/icons";
 import { useQuote } from "@/components/quote/QuoteProvider";
+import { WhatsAppChooser } from "@/components/WhatsAppChooser";
 import { buildNav, type MenuCategory } from "./nav";
 
 export function Header({ categories }: { categories: MenuCategory[] }) {
@@ -73,9 +74,9 @@ export function Header({ categories }: { categories: MenuCategory[] }) {
             <a href={contact.phoneHref} className="flex items-center gap-1.5 hover:text-white">
               <Phone className="size-3.5" aria-hidden /> {contact.phone}
             </a>
-            <a href={contact.whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-white">
+            <WhatsAppChooser className="flex items-center gap-1.5 hover:text-white">
               <WhatsAppIcon className="size-3.5" /> WhatsApp us
-            </a>
+            </WhatsAppChooser>
             <a href={`mailto:${contact.email}`} className="hover:text-white">
               {contact.email}
             </a>
@@ -268,7 +269,6 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
 }
 
 function MobileMenu({ nav, onClose }: { nav: ReturnType<typeof buildNav>; onClose: () => void }) {
-  const contact = useContact();
   const [expanded, setExpanded] = useState<string | null>("Products");
   return (
     <div className="fixed inset-0 z-[60] xl:hidden" role="dialog" aria-modal="true" aria-label="Menu">
@@ -320,9 +320,9 @@ function MobileMenu({ nav, onClose }: { nav: ReturnType<typeof buildNav>; onClos
           <Link href="/quote" className="btn btn-sun w-full">
             Get a Quote
           </Link>
-          <a href={contact.whatsappLink("Hello Africell Solar Aba, I'd like to make an enquiry.")} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp w-full">
+          <WhatsAppChooser className="btn btn-whatsapp w-full">
             <WhatsAppIcon className="size-4" /> Chat on WhatsApp
-          </a>
+          </WhatsAppChooser>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FileText } from "lucide-react";
 import { getCatalogue } from "@/lib/catalog";
 import { getContact } from "@/lib/site-settings";
-import { whatsappHref } from "@/config/site";
+import { waMessage, whatsappHref } from "@/config/site";
 import { PageHero } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -54,7 +54,7 @@ export default async function DownloadsPage() {
                       Installation guide
                     </Link>
                   )}
-                  <a href={whatsappHref(contact.whatsapp, `Hello, please send me the datasheet and manual for the ${s.name}.`)} target="_blank" rel="noopener noreferrer" className="btn btn-brand !py-2.5 !text-[13.5px]">
+                  <a href={whatsappHref(contact.whatsapp, waMessage("datasheet", `Please send me the datasheet and manual for the ${s.name}.`))} target="_blank" rel="noopener noreferrer" className="btn btn-brand !py-2.5 !text-[13.5px]">
                     Request datasheet
                   </a>
                 </div>
