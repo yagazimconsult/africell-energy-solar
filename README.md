@@ -7,6 +7,8 @@ Home · Products (Brand → Category → Series → Model) · Solutions · Suppo
 
 ## Run
 
+**Easiest (Windows):** double-click **Start website.cmd** in this folder. It opens http://localhost:3000; close its window to stop.
+
 ```bash
 cp .env.example .env   # then fill in the Supabase URL and publishable key
 npm install
