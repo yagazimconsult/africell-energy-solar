@@ -41,8 +41,9 @@ only when you say so.)
 
 ## Next up
 
-- Technical-room photo (Africell inverter + two Africell batteries on a luxury microcement wall):
-  the image account allows about five images a day, so it is first in the next session.
+- Next image batch (about 4 images, within the daily limit): technical-room photo, plus three images for
+  the Contact page cards (WhatsApp, Call us, Email). The "Visit the showroom" card waits for the
+  Google Business Profile.
 - See [IMAGE-BRIEFS.md](IMAGE-BRIEFS.md) for the full image plan.
 
 ---
