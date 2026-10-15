@@ -48,6 +48,12 @@ only when you say so.)
 
 ## Log
 
+### 2026-10-15 — Logo and "Aba" tag
+- The "ABA" tag now sits right after the word SOLAR (header and footer) instead of floating on its own,
+  so it reads as one name: AFRICELL ENERGY SOLAR · ABA.
+- Fixed the footer showing the company name twice (the sun symbol image carried its own small text).
+- Removed the empty space around the header logo; browser-tab icon is now the clean sun-and-globe symbol.
+
 ### 2026-10-15 — Contact card images and storage slide
 - Contact page cards now have premium Africell images across the top with the icon badge overlapping:
   **WhatsApp** (customer chatting at home, Africell battery behind), **Call us** (customer-care advisor,

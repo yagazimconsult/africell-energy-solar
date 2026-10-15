@@ -31,8 +31,13 @@ const jobs = [
   // Brand
   async () => {
     await mkdir(path.join(OUT, "brand"), { recursive: true });
-    await sharp(src("2024_10_50-1.png")).toFile(path.join(OUT, "brand/logo.png"));
-    await sharp(src("2024_10_400x400-1.png")).trim().toFile(path.join(OUT, "brand/logo-mark.png"));
+    // Full logo, trimmed of its transparent padding so it sits tight against the "Aba" tag.
+    await sharp(src("2024_10_50-1.png")).trim().toFile(path.join(OUT, "brand/logo.png"));
+    // Sun-and-globe symbol only: the source also carries a white wordmark underneath, which would
+    // duplicate the text we set beside the symbol on dark backgrounds.
+    const markFull = await sharp(src("2024_10_400x400-1.png")).trim().toBuffer();
+    const { height } = await sharp(markFull).metadata();
+    await sharp(markFull).extract({ left: 0, top: 0, width: (await sharp(markFull).metadata()).width, height: Math.round(height * 0.6) }).trim().toFile(path.join(OUT, "brand/logo-mark.png"));
     console.log("✓ brand logos");
   },
 
