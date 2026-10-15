@@ -22,13 +22,13 @@ After generating, check every image for misspelled "AFRICELL" text before using 
 |---|---|---|---|
 | 1 | Ultra-modern villa at blue hour, infinity pool, Africell inverter + battery by the entrance | Homepage slide 1, Home Solar page, social share image | ✅ Live — homepage slide 1, social share image, panels guide |
 | 2 | Studio shot: Africell product family on white podiums (inverter, wall battery, floor battery, panels) | Homepage slide 2, About page | ✅ Live — homepage slide 2, About page, inverter guide |
-| 3 | Luxury home technical room: Africell inverter + two Africell wall batteries on a microcement wall | Homepage slide 3 (storage), inverter guide | ⏳ Queued (daily limit) — next session |
+| 3 | Luxury home technical room: Africell inverter + two Africell wall batteries on a microcement wall | Homepage slide 3 (storage), inverter guide | ✅ Live — homepage slide 3 (storage), LiFePO4 battery guide |
 | 4 | Upscale Africell showroom: feature wall of Africell products, AFRICELL sign, advisor with couple | "Why buy from us", About page header | ✅ Live — homepage slide 4, "Why buy from us", About header, Shops & SMEs page |
 | 5 | Modern office building with rooftop solar at golden hour (no equipment shown) | Homepage slide 4, Commercial / Shops & SMEs pages | ✅ Live — homepage slide 3, Commercial page |
 | 6 | Family in a luxury living room, lights on during a city blackout, Africell battery in background | Home Solar page, battery guide | ✅ Live — Home Solar page |
-| 7 | Smiling customer at home chatting on her phone; Africell wall battery on the wall behind | Contact page: WhatsApp card | ⏳ Queued (daily limit) |
-| 8 | Friendly customer-care advisor with headset at a modern Africell desk; AFRICELL sign behind | Contact page: Call us card | ⏳ Queued (daily limit) |
-| 9 | Modern desk: laptop showing a quote email, coffee, and an Africell product brochure | Contact page: Email card | ⏳ Queued (daily limit) |
+| 7 | Smiling customer at home chatting on her phone; Africell wall battery on the wall behind | Contact page: WhatsApp card | ✅ Live — Contact page |
+| 8 | Friendly customer-care advisor with headset at a modern Africell desk; AFRICELL sign behind | Contact page: Call us card | ✅ Live — Contact page |
+| 9 | Modern desk: laptop showing a quote email, coffee, and an Africell product brochure | Contact page: Email card | ✅ Live — Contact page |
 | — | Visit the showroom card | Contact page | Waits for the Google Business Profile (real photos + map) |
 
 The five plain images generated on 2026-10-13 are no longer used anywhere on the site. Every AFRICELL

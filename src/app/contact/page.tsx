@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { site } from "@/config/site";
 import { WhatsAppChooser } from "@/components/WhatsAppChooser";
@@ -16,9 +17,10 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
   const contact = await getContact();
   const cards = [
-    { icon: Phone, title: "Call us", lines: [contact.phone], href: contact.phoneHref, cta: "Call now" },
-    { icon: Mail, title: "Email", lines: [contact.email], href: `mailto:${contact.email}`, cta: "Send email" },
-    { icon: MapPin, title: "Visit the showroom", lines: [contact.addressLine, `${contact.city}, ${contact.state}`], href: contact.mapUrl, cta: "Get directions", external: true },
+    { icon: Phone, title: "Call us", lines: [contact.phone], href: contact.phoneHref, cta: "Call now", image: "/images/site/gen-contact-call.webp" },
+    { icon: Mail, title: "Email", lines: [contact.email], href: `mailto:${contact.email}`, cta: "Send email", image: "/images/site/gen-contact-email.webp" },
+    // Photo comes with the Google Business Profile; until then a branded map-style header.
+    { icon: MapPin, title: "Visit the showroom", lines: [contact.addressLine, `${contact.city}, ${contact.state}`], href: contact.mapUrl, cta: "Get directions", external: true, image: null },
   ];
 
   return (
@@ -26,26 +28,32 @@ export default async function ContactPage() {
       <PageHero eyebrow="Contact" title="Talk to our Aba team" intro="Questions about a product, a system for your home or business, or an existing installation? We're here to help." crumbs={[{ label: "Contact" }]} />
 
       <section className="container-x relative z-10 -mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <WhatsAppChooser className="card card-hover flex flex-col p-6 text-left">
-          <span className="grid size-11 place-items-center rounded-xl bg-brand-50 text-brand">
-            <WhatsAppIcon className="size-5" />
+        <WhatsAppChooser className="card card-hover group flex flex-col overflow-hidden text-left">
+          <CardImage image="/images/site/gen-contact-whatsapp.webp" />
+          <span className="flex flex-1 flex-col px-6 pb-6">
+            <CardIcon whatsapp>
+              <WhatsAppIcon className="size-5" />
+            </CardIcon>
+            <span className="mt-3 block text-[17px] font-bold">WhatsApp</span>
+            <span className="mt-1 block text-[14.5px] text-muted">Fastest way to reach our team: purchases, repairs and questions</span>
+            <span className="mt-auto block pt-4 text-[14px] font-semibold text-brand">Start chat →</span>
           </span>
-          <span className="mt-4 block text-[17px] font-bold">WhatsApp</span>
-          <span className="mt-1 block text-[14.5px] text-muted">Fastest way to reach our team: purchases, repairs and questions</span>
-          <span className="mt-auto block pt-4 text-[14px] font-semibold text-brand">Start chat →</span>
         </WhatsAppChooser>
         {cards.map((c) => (
-          <a key={c.title} href={c.href} {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="card card-hover flex flex-col p-6">
-            <span className="grid size-11 place-items-center rounded-xl bg-brand-50 text-brand">
-              <c.icon className="size-5" />
+          <a key={c.title} href={c.href} {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="card card-hover group flex flex-col overflow-hidden">
+            <CardImage image={c.image} />
+            <span className="flex flex-1 flex-col px-6 pb-6">
+              <CardIcon>
+                <c.icon className="size-5" />
+              </CardIcon>
+              <h2 className="mt-3 text-[17px] font-bold">{c.title}</h2>
+              {c.lines.map((l) => (
+                <p key={l} className="mt-1 break-words text-[14.5px] text-muted">
+                  {l}
+                </p>
+              ))}
+              <span className="mt-auto pt-4 text-[14px] font-semibold text-brand">{c.cta} →</span>
             </span>
-            <h2 className="mt-4 text-[17px] font-bold">{c.title}</h2>
-            {c.lines.map((l) => (
-              <p key={l} className="mt-1 break-words text-[14.5px] text-muted">
-                {l}
-              </p>
-            ))}
-            <span className="mt-auto pt-4 text-[14px] font-semibold text-brand">{c.cta} →</span>
           </a>
         ))}
       </section>
@@ -75,5 +83,31 @@ export default async function ContactPage() {
         </aside>
       </section>
     </>
+  );
+}
+
+/** Photo across the top of a contact card; a branded map-style header when there is no photo yet. */
+function CardImage({ image }: { image: string | null }) {
+  return (
+    <span className="relative block aspect-[3/2] w-full overflow-hidden">
+      {image ? (
+        <Image src={image} alt="" fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+      ) : (
+        <span className="sun-glow absolute inset-0">
+          <span className="grid-lines absolute inset-0" />
+          <MapPin className="absolute left-1/2 top-1/2 size-14 -translate-x-1/2 -translate-y-1/2 text-sun drop-shadow-[0_8px_20px_rgb(245_158_11/0.45)]" aria-hidden />
+        </span>
+      )}
+      <span className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/25 to-transparent" />
+    </span>
+  );
+}
+
+/** Round icon badge that overlaps the bottom edge of the card photo. */
+function CardIcon({ children, whatsapp = false }: { children: React.ReactNode; whatsapp?: boolean }) {
+  return (
+    <span className={`relative -mt-6 grid size-12 place-items-center rounded-2xl shadow-card ring-4 ring-white ${whatsapp ? "bg-[#1faa59] text-white" : "bg-white text-brand"}`}>
+      {children}
+    </span>
   );
 }

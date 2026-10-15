@@ -164,7 +164,7 @@ export const articles: Article[] = [
     excerpt: "Why lithium iron phosphate has become the preferred choice for solar storage, and when it is worth the higher upfront cost.",
     date: "2026-09-18",
     readMinutes: 4,
-    image: "/images/products/hy-300-main.webp",
+    image: "/images/site/gen-tech-room.webp",
     body: [
       { text: "For years, tubular lead-acid batteries were the default for inverter systems in Nigeria. Lithium iron phosphate (LiFePO4) batteries now offer a better long-term deal for most solar users." },
       { heading: "Usable capacity", text: "Lead-acid batteries should not be routinely discharged below about 50% if you want them to last. LiFePO4 batteries like the HY Series are rated for 95% or more depth of discharge, so you can use nearly all the energy you paid for." },

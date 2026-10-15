@@ -81,7 +81,9 @@ const jobs = [
 const GEN = "_source/generated";
 for (const name of ["hero-house-dusk", "installers", "campus-aerial", "utility-room", "showroom",
   // Premium Africell-branded set (2026-10-14), see docs/IMAGE-BRIEFS.md
-  "villa", "product-family", "showroom-africell", "office-rooftop", "family-outage"]) {
+  "villa", "product-family", "showroom-africell", "office-rooftop", "family-outage",
+  // Contact cards + technical room (2026-10-15)
+  "contact-whatsapp", "contact-call", "contact-email", "tech-room"]) {
   jobs.push(() => save(sharp(path.join(GEN, `gen-${name}.png`)), `site/gen-${name}.webp`, { width: 2000, quality: 80 }));
 }
 

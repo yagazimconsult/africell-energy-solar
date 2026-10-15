@@ -30,6 +30,16 @@ const SLIDES: HeroSlide[] = [
     secondary: { label: "How much storage do I need?", href: "/support/sizing-guide" },
   },
   {
+    image: "/images/site/gen-tech-room.webp",
+    focus: "70% center",
+    eyebrow: "LiFePO4 lithium storage",
+    title: "Quiet, clean power",
+    highlight: "through every outage.",
+    text: "HY Series batteries from 5.12kWh to 15.36kWh, with a built-in BMS, at least 6,000 cycles and room to expand to 16 packs.",
+    primary: { label: "View batteries", href: "/products/lithium-batteries" },
+    secondary: { label: "How much storage do I need?", href: "/support/sizing-guide" },
+  },
+  {
     image: "/images/site/gen-office-rooftop.webp",
     focus: "60% center",
     eyebrow: "Business & institutions",

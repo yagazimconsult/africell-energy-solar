@@ -31,7 +31,7 @@ only when you say so.)
 | Maintenance & repair requests → WhatsApp technical team | ✅ Done |
 | One WhatsApp number, every message labelled (purchase, maintenance, product, datasheet, general) | ✅ Done |
 | Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
-| Premium Africell-branded photos (modern homes, studio shots, showroom) | ✅ 5 of 6 live · 1 queued (generator daily limit) |
+| Premium Africell-branded photos (modern homes, studio shots, showroom, contact cards) | ✅ All 9 live · showroom card waits for Google Business Profile |
 | Phone, WhatsApp, email, address | ⏳ Placeholders (by your choice, for now) |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
@@ -41,14 +41,21 @@ only when you say so.)
 
 ## Next up
 
-- Next image batch (about 4 images, within the daily limit): technical-room photo, plus three images for
-  the Contact page cards (WhatsApp, Call us, Email). The "Visit the showroom" card waits for the
-  Google Business Profile.
+- "Visit the showroom" card photo and map: when the Google Business Profile is set up.
 - See [IMAGE-BRIEFS.md](IMAGE-BRIEFS.md) for the full image plan.
 
 ---
 
 ## Log
+
+### 2026-10-15 — Contact card images and storage slide
+- Contact page cards now have premium Africell images across the top with the icon badge overlapping:
+  **WhatsApp** (customer chatting at home, Africell battery behind), **Call us** (customer-care advisor,
+  AFRICELL sign and inverter behind), **Email** (laptop with a quote email and an Africell brochure).
+- **Visit the showroom** keeps a branded map-style header until the Google Business Profile photos/map.
+- New luxury **technical-room** image (Africell inverter + two Africell batteries) added as homepage
+  slide 3 ("Quiet, clean power through every outage") and as the LiFePO4 battery guide image.
+- All AFRICELL lettering zoom-checked: spelled correctly.
 
 ### 2026-10-15 — Viewing locally & connection resilience
 - Added **Start website.cmd**: double-click to run the site on this computer (opens http://localhost:3000).
