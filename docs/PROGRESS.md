@@ -50,6 +50,11 @@ only when you say so.)
 
 ## Log
 
+### 2026-10-15 — Viewing locally & connection resilience
+- Added **Start website.cmd**: double-click to run the site on this computer (opens http://localhost:3000).
+- The site now retries database requests automatically when the internet briefly drops, and shows a
+  friendly "We couldn't load this page, Try again" screen instead of a technical error if it is fully offline.
+
 ### 2026-10-14 — Slideshow arrows
 - Homepage slideshow arrows moved to the sides like Deye's: previous arrow on the left, next arrow on the
   right, centred vertically and larger. On phones and tablets they stay small beside the dots (side arrows
