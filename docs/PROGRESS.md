@@ -41,12 +41,25 @@ only when you say so.)
 
 ## Next up
 
+- **Remove the gold background from the inverter and solar-panel videos** (already uploaded; blocked today
+  only by the image service's daily limit). Then they blend into the site's navy like the battery video.
 - "Visit the showroom" card photo and map: when the Google Business Profile is set up.
 - See [IMAGE-BRIEFS.md](IMAGE-BRIEFS.md) for the full image plan.
 
 ---
 
 ## Log
+
+### 2026-10-15 — Product videos on the category pages
+- Your three product videos now replace the still images at the top of each product range:
+  **Inverters** → the rotating Africell inverter, **Lithium batteries (HY Series)** → the rotating Africell
+  wall battery, **Solar panels** → the rotating panel. Each video was checked frame by frame so the
+  right product goes on the right page.
+- Cropped out the AI generator's "✦" watermark, removed the sound, and compressed them from ~13 MB to
+  3 MB (battery: 0.9 MB). They play silently on a loop, start only when scrolled into view (saves mobile
+  data), and show a still image for visitors who turn off animations.
+- **Battery video:** background removed, so the battery now rotates directly on the site's navy/amber
+  background. Inverter and panel keep their gold background (framed in navy) until tomorrow.
 
 ### 2026-10-15 — Logo and "Aba" tag
 - The "ABA" tag now sits right after the word SOLAR (header and footer) instead of floating on its own,

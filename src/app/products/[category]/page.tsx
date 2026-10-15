@@ -6,6 +6,8 @@ import { ArrowRight, Check } from "lucide-react";
 import { getCatalogue, getCategory, toCard } from "@/lib/catalog";
 import { ProductCard } from "@/components/product/ProductCard";
 import { SpecTable } from "@/components/product/SpecTable";
+import { ProductVideo } from "@/components/product/ProductVideo";
+import { seriesVideos } from "@/data/videos";
 import { CtaBand, PageHero } from "@/components/ui";
 
 type Params = { params: Promise<{ category: string }> };
@@ -87,9 +89,13 @@ export default async function CategoryPage({ params }: Params) {
                     ))}
                   </ul>
                 </div>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-mist via-white to-brand-50 ring-1 ring-line">
-                  <Image src={series.gallery[0]} alt={series.name} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-contain mix-blend-multiply p-10" />
-                </div>
+                {seriesVideos[series.slug] ? (
+                  <ProductVideo video={seriesVideos[series.slug]} label={`${series.name}, 360° view`} />
+                ) : (
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-mist via-white to-brand-50 ring-1 ring-line">
+                    <Image src={series.gallery[0]} alt={series.name} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-contain mix-blend-multiply p-10" />
+                  </div>
+                )}
               </div>
 
               <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
