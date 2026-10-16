@@ -96,10 +96,10 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
           />
         </div>
       ))}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/75 to-ink/5" aria-hidden />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink from-35% via-ink/70 via-60% to-ink/0 lg:bg-gradient-to-r lg:from-ink lg:from-0% lg:via-ink/75 lg:via-50% lg:to-ink/5" aria-hidden />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-ink to-transparent" aria-hidden />
 
-      <div className="container-x grid min-h-[640px] items-center py-20 md:min-h-[720px] lg:pl-24 2xl:pl-8">
+      <div className="container-x grid min-h-[700px] items-end pb-24 pt-56 md:min-h-[760px] lg:min-h-[720px] lg:items-center lg:py-20 lg:pl-24 2xl:pl-8">
         <div key={index} className="max-w-2xl" aria-live={paused ? "polite" : "off"}>
           <p className="animate-fade-up inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-white/85 ring-1 ring-white/15 backdrop-blur">
             <MapPin className="size-3.5 text-sun" aria-hidden /> {slide.eyebrow}
@@ -132,7 +132,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                   aria-selected={i === index}
                   aria-label={`Slide ${i + 1}: ${s.title} ${s.highlight}`}
                   onClick={() => go(i)}
-                  className="group relative h-1.5 w-12 overflow-hidden rounded-full bg-white/20 sm:w-16"
+                  className="group relative h-1.5 w-7 overflow-hidden rounded-full bg-white/20 sm:w-12 lg:w-16"
                 >
                   {i === index && (
                     <span

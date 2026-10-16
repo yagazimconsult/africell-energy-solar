@@ -41,14 +41,20 @@ only when you say so.)
 
 ## Next up
 
-- **Remove the gold background from the inverter and solar-panel videos** (already uploaded; blocked today
-  only by the image service's daily limit). Then they blend into the site's navy like the battery video.
 - "Visit the showroom" card photo and map: when the Google Business Profile is set up.
 - See [IMAGE-BRIEFS.md](IMAGE-BRIEFS.md) for the full image plan.
 
 ---
 
 ## Log
+
+### 2026-10-16 — All product videos on site colours; phone slideshow fix
+- **Inverter and solar-panel videos:** gold background removed, so all three product videos (inverter,
+  battery, panel) now rotate directly on the site's navy/amber background. Smaller files too
+  (inverter 1.7 MB, panel 0.9 MB).
+- **Homepage slideshow on phones:** headline moved to the lower part of each slide with a bottom fade, so
+  the products show clearly in the top half; slide dots made shorter so the right arrow no longer gets cut
+  off on small phones (it did with five slides).
 
 ### 2026-10-15 — Product videos on the category pages
 - Your three product videos now replace the still images at the top of each product range:
