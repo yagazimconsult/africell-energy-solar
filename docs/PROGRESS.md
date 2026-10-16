@@ -33,7 +33,8 @@ only when you say so.)
 | Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
 | Premium Africell-branded photos (modern homes, studio shots, showroom, contact cards) | ✅ All 9 live · showroom card waits for Google Business Profile |
 | Phone & WhatsApp number | ✅ +234 707 518 4478 (07075184478) |
-| Email, address | ⏳ Placeholders (by your choice, for now) |
+| Showroom address | ✅ No. 13 Factory Road, Aba, Abia State |
+| Email | ⏳ Placeholder (by your choice, for now) |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
 | Inverter & solar panel datasheets from Lagos | ⏳ Waiting on supplier |
@@ -48,6 +49,11 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-10-16 — Showroom address
+- Address **No. 13 Factory Road, Aba, Abia State** is now shown in the footer, on the Contact page
+  ("Visit the showroom" card) and in the business details Google reads. "Get directions" opens Google Maps
+  at that address. (Changed in the Supabase site settings, no code change.)
 
 ### 2026-10-16 — WhatsApp number live
 - **0707 518 4478 is now the WhatsApp number too.** Every WhatsApp button opens a chat with it, with the
