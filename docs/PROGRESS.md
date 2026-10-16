@@ -32,8 +32,8 @@ only when you say so.)
 | One WhatsApp number, every message labelled (purchase, maintenance, product, datasheet, general) | ✅ Done |
 | Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
 | Premium Africell-branded photos (modern homes, studio shots, showroom, contact cards) | ✅ All 9 live · showroom card waits for Google Business Profile |
-| Phone number | ✅ +234 707 518 4478 (07075184478) |
-| WhatsApp, email, address | ⏳ Placeholders (by your choice, for now) |
+| Phone & WhatsApp number | ✅ +234 707 518 4478 (07075184478) |
+| Email, address | ⏳ Placeholders (by your choice, for now) |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
 | Inverter & solar panel datasheets from Lagos | ⏳ Waiting on supplier |
@@ -48,6 +48,13 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-10-16 — WhatsApp number live
+- **0707 518 4478 is now the WhatsApp number too.** Every WhatsApp button opens a chat with it, with the
+  labelled message filled in (🛒 purchase/quote, 🔧 maintenance/repair, 💬 product enquiry, 📄 datasheet,
+  ❓ general). Checked on product pages, Downloads, Contact and the "What do you need?" chooser.
+- Added a private "refresh now" link so changes made in the database show on the site immediately
+  instead of after up to 5 minutes (protected by a secret key kept in `.env`).
 
 ### 2026-10-16 — Real phone number
 - Africell Aba phone number **0707 518 4478** (shown as +234 707 518 4478) replaced the placeholder everywhere:

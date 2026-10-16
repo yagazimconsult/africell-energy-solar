@@ -30,7 +30,8 @@ npm run build          # production build
 | Product images | `public/images/products` (regenerate with `node scripts/prepare-images.mjs`) |
 
 Pages are pre-rendered and re-read the database at most every **5 minutes**, so admin edits
-appear on the site without a redeploy.
+appear on the site without a redeploy. To show an edit **immediately**, open
+`/api/revalidate?secret=<REVALIDATE_SECRET>` (the secret is in `.env`; never share it).
 
 ### Spec tables
 Each series has a `spec_layout` (groups → rows). A row with a `shared` value applies to every
