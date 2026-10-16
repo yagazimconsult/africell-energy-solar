@@ -32,7 +32,8 @@ only when you say so.)
 | One WhatsApp number, every message labelled (purchase, maintenance, product, datasheet, general) | ✅ Done |
 | Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
 | Premium Africell-branded photos (modern homes, studio shots, showroom, contact cards) | ✅ All 9 live · showroom card waits for Google Business Profile |
-| Phone, WhatsApp, email, address | ⏳ Placeholders (by your choice, for now) |
+| Phone number | ✅ +234 707 518 4478 (07075184478) |
+| WhatsApp, email, address | ⏳ Placeholders (by your choice, for now) |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
 | Inverter & solar panel datasheets from Lagos | ⏳ Waiting on supplier |
@@ -47,6 +48,11 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-10-16 — Real phone number
+- Africell Aba phone number **0707 518 4478** (shown as +234 707 518 4478) replaced the placeholder everywhere:
+  header, footer, Contact page, product pages. "Call" buttons dial it directly. (Changed in the
+  Supabase site settings, so no code change was needed.)
 
 ### 2026-10-16 — All product videos on site colours; phone slideshow fix
 - **Inverter and solar-panel videos:** gold background removed, so all three product videos (inverter,
