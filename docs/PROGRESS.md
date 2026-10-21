@@ -33,6 +33,7 @@ only when you say so.)
 | Homepage slideshow with smooth image transitions (like Deye) | ✅ Done |
 | Premium Africell-branded photos (modern homes, studio shots, showroom, contact cards) | ✅ All 9 live · showroom card waits for Google Business Profile |
 | Phone & WhatsApp number | ✅ +234 707 518 4478 (07075184478) |
+| Customer accounts (sign in, saved calculations, request history) | 🟡 Built · waiting on 2 Supabase dashboard settings |
 | Showroom address | ✅ No. 13 Factory Road, Aba, Abia State |
 | Email | ⏳ Placeholder (by your choice, for now) |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
@@ -49,6 +50,15 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-10-21 — Customer accounts (optional)
+- Customers can **create an account** (email + password; home/small or business/bulk buyer) at My account.
+- **Sizing calculator:** "Save to my account" keeps a named calculation; reopen it any time from My account and turn it into a quote.
+- **My account:** saved calculations, quotes and service requests with reference and status, contact details, change password.
+- Signed-in customers get their details filled in on the quote and maintenance forms. Guests see no change.
+- Database: new tables `customer_profiles` and `saved_sizings`, and `enquiries` now records which customer sent a request.
+  Customers can only see their own records, never the team's internal notes. Supabase security check: no issues.
+- Privacy Policy updated for accounts.
 
 ### 2026-10-16 — Showroom address
 - Address **No. 13 Factory Road, Aba, Abia State** is now shown in the footer, on the Contact page
