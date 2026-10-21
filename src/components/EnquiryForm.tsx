@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/components/account/AuthProvider";
 import { Loader2, Send } from "lucide-react";
 import { useContact } from "@/components/ContactProvider";
 import { waMessage } from "@/config/site";
@@ -43,6 +44,20 @@ export function EnquiryForm({
   const [installation, setInstallation] = useState<"yes" | "no" | "unsure">("unsure");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const { whatsappLink } = useContact();
+
+  // Signed-in customers: fill in what we already know (never overwriting what they typed).
+  const { user, profile } = useAuth();
+  useEffect(() => {
+    if (!user) return;
+    setForm((f) => ({
+      ...f,
+      name: f.name || profile?.full_name || "",
+      phone: f.phone || profile?.phone || "",
+      email: f.email || user.email || "",
+      location: f.location || profile?.city || "",
+    }));
+    if (profile?.buyer_type === "bulk") setPurchaseType("bulk");
+  }, [user, profile]);
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
 

@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { Info, Minus, Plus, RotateCcw } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Bookmark, FolderOpen, Info, Loader2, Minus, Plus, RotateCcw } from "lucide-react";
+import { useAuth } from "@/components/account/AuthProvider";
+import { browserSupabase } from "@/lib/supabase-browser";
 import { useContact } from "@/components/ContactProvider";
 import { waMessage } from "@/config/site";
 import { WhatsAppIcon } from "@/components/icons";
@@ -40,6 +43,26 @@ const APPLIANCES: Appliance[] = [
 
 const DEFAULTS: Record<string, number> = { bulb: 8, fan: 3, tv: 1, decoder: 1, laptop: 1, charger: 3, fridge: 1 };
 
+/** A calculation waiting to be saved while the customer signs in. */
+const PENDING_KEY = "africell-pending-sizing-v1";
+
+/** Keeps only known appliances with sensible quantities (data comes from storage or the database). */
+function cleanQty(raw: unknown): Record<string, number> {
+  const out: Record<string, number> = {};
+  if (raw && typeof raw === "object") {
+    for (const a of APPLIANCES) {
+      const n = Number((raw as Record<string, unknown>)[a.id]);
+      if (Number.isFinite(n) && n > 0) out[a.id] = Math.min(50, Math.round(n));
+    }
+  }
+  return out;
+}
+
+const clampShare = (v: unknown) => Math.max(30, Math.min(100, Number(v) || 60));
+const defaultTitle = () => `My solar system, ${new Date().toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}`;
+
+type SaveState = { kind: "closed" | "open" | "saving" } | { kind: "saved"; title: string } | { kind: "error"; message: string };
+
 /** A catalogue product the calculator can recommend; rating is kVA, kWh or W. Supplied from Supabase by the page. */
 export interface SizingOption {
   key: string;
@@ -62,9 +85,52 @@ export function SizingCalculator({ inverters, batteries, panel }: { inverters: S
   const [batteryShare, setBatteryShare] = useState(60);
   const { add, setSizing } = useQuote();
   const [added, setAdded] = useState(false);
+  const { ready, user } = useAuth();
+  const router = useRouter();
+  const [save, setSave] = useState<SaveState>({ kind: "closed" });
+  const [title, setTitle] = useState("");
+  const [openedTitle, setOpenedTitle] = useState<string | null>(null);
+  const restored = useRef(false);
+
+  // Reopen a saved calculation (?load=id from My Account), or finish saving one that was waiting
+  // for the customer to sign in.
+  useEffect(() => {
+    if (!ready || restored.current) return;
+    restored.current = true;
+    const loadId = new URLSearchParams(window.location.search).get("load");
+    if (loadId && user) {
+      browserSupabase()
+        .from("saved_sizings")
+        .select("title, appliances, battery_share")
+        .eq("id", loadId)
+        .maybeSingle()
+        .then(({ data }) => {
+          if (!data) return;
+          setQty(cleanQty(data.appliances));
+          setBatteryShare(clampShare(data.battery_share));
+          setOpenedTitle(data.title);
+          setTitle(data.title);
+        });
+      return;
+    }
+    let pending: { qty?: unknown; batteryShare?: number } | null = null;
+    try {
+      pending = JSON.parse(localStorage.getItem(PENDING_KEY) ?? "null");
+      localStorage.removeItem(PENDING_KEY);
+    } catch {}
+    if (pending?.qty) {
+      setQty(cleanQty(pending.qty));
+      setBatteryShare(clampShare(pending.batteryShare));
+      if (user) {
+        setTitle(defaultTitle());
+        setSave({ kind: "open" });
+      }
+    }
+  }, [ready, user]);
 
   const change = (id: string, d: number) => {
     setAdded(false);
+    if (save.kind === "saved") setSave({ kind: "closed" });
     setQty((q) => ({ ...q, [id]: Math.max(0, Math.min(50, (q[id] ?? 0) + d)) }));
   };
 
@@ -109,6 +175,45 @@ export function SizingCalculator({ inverters, batteries, panel }: { inverters: S
     setAdded(true);
   };
 
+  const startSave = () => {
+    if (!user) {
+      try {
+        localStorage.setItem(PENDING_KEY, JSON.stringify({ qty, batteryShare }));
+      } catch {}
+      router.push(`/account?next=${encodeURIComponent("/support/sizing-guide")}`);
+      return;
+    }
+    if (!title) setTitle(defaultTitle());
+    setSave({ kind: "open" });
+  };
+
+  async function doSave(e: React.FormEvent) {
+    e.preventDefault();
+    const name = (title.trim() || defaultTitle()).slice(0, 80);
+    setSave({ kind: "saving" });
+    const { error } = await browserSupabase()
+      .from("saved_sizings")
+      .insert({
+        title: name,
+        appliances: cleanQty(qty),
+        battery_share: batteryShare,
+        load_kw: Number((r.loadW / 1000).toFixed(2)),
+        daily_kwh: Number((r.dailyWh / 1000).toFixed(1)),
+        recommendation: {
+          inverter: r.inverter ? r.inverter.name : `Above ${inverters[inverters.length - 1]?.rating ?? 10}kVA: parallel inverters or a larger system`,
+          battery: `${r.battery.count} × ${r.battery.name}`,
+          panels: `${r.panels} × ${panel.name}`,
+          storageKwh: (r.battery.rating * r.battery.count).toFixed(2),
+          arrayKwp: ((r.panels * panel.rating) / 1000).toFixed(2),
+        },
+      });
+    if (error) {
+      setSave({ kind: "error", message: error.message.includes("limit of 100") ? error.message : "We couldn't save this calculation. Please try again." });
+      return;
+    }
+    setSave({ kind: "saved", title: name });
+  }
+
   return (
     <div className="grid gap-8 lg:grid-cols-[1.25fr_1fr]">
       {/* Appliance picker */}
@@ -118,7 +223,13 @@ export function SizingCalculator({ inverters, batteries, panel }: { inverters: S
             <h2 className="text-2xl font-extrabold">1. Choose your appliances</h2>
             <p className="mt-1 text-[14.5px] text-muted">Include only what you want to run on solar and battery.</p>
           </div>
-          <button type="button" onClick={() => setQty({})} className="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-muted hover:text-ink">
+          <button
+            type="button"
+            onClick={() => {
+              setQty({});
+              setSave({ kind: "closed" });
+              setOpenedTitle(null);
+            }} className="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-muted hover:text-ink">
             <RotateCcw className="size-3.5" aria-hidden /> Reset
           </button>
         </div>
@@ -164,6 +275,11 @@ export function SizingCalculator({ inverters, batteries, panel }: { inverters: S
         <div className="sun-glow relative overflow-hidden rounded-[1.75rem] p-7 text-white">
           <div className="grid-lines absolute inset-0" aria-hidden />
           <div className="relative">
+            {openedTitle && (
+              <p className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[12.5px] font-semibold text-sun ring-1 ring-white/15">
+                <FolderOpen className="size-3.5" aria-hidden /> {openedTitle}
+              </p>
+            )}
             <h2 className="text-xl font-extrabold">Your estimate</h2>
             <dl className="mt-5 grid grid-cols-2 gap-3">
               <Stat label="Running load" value={empty ? "—" : `${(r.loadW / 1000).toFixed(2)} kW`} />
@@ -197,6 +313,53 @@ export function SizingCalculator({ inverters, batteries, panel }: { inverters: S
               <a href={empty ? undefined : whatsappLink(summary)} target="_blank" rel="noopener noreferrer" aria-disabled={empty} className={`btn btn-whatsapp w-full ${empty ? "pointer-events-none opacity-50" : ""}`}>
                 <WhatsAppIcon className="size-4" /> Send to our team
               </a>
+            </div>
+
+            {/* Save to the customer's account */}
+            <div className="mt-4 border-t border-white/10 pt-4">
+              {save.kind === "saved" ? (
+                <p role="status" className="text-[14px] text-white/85">
+                  <b className="text-sun">Saved ✓</b> “{save.title}” is in your account.{" "}
+                  <Link href="/account" className="font-semibold text-white underline">
+                    View saved calculations
+                  </Link>
+                </p>
+              ) : save.kind === "closed" ? (
+                <>
+                  <button type="button" disabled={empty} onClick={startSave} className="btn btn-glass w-full disabled:opacity-50">
+                    <Bookmark className="size-4" aria-hidden /> Save to my account
+                  </button>
+                  {!user && <p className="mt-2 text-center text-[12.5px] text-white/55">Sign in or create a free account to keep this calculation for later.</p>}
+                </>
+              ) : (
+                <form onSubmit={doSave} className="space-y-2.5">
+                  <label htmlFor="sizing-title" className="block text-[13px] font-semibold text-white/80">
+                    Name this calculation
+                  </label>
+                  <input
+                    id="sizing-title"
+                    autoFocus
+                    maxLength={80}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="e.g. Home, Ogbor Hill or Shop at Ariaria"
+                    className="h-11 w-full rounded-xl bg-white px-4 text-[15px] text-ink outline-none focus:ring-2 focus:ring-sun"
+                  />
+                  {save.kind === "error" && (
+                    <p role="alert" className="text-[13px] text-red-200">
+                      {save.message}
+                    </p>
+                  )}
+                  <div className="flex gap-2">
+                    <button type="submit" disabled={save.kind === "saving" || empty} className="btn btn-sun flex-1 disabled:opacity-60">
+                      {save.kind === "saving" && <Loader2 className="size-4 animate-spin" aria-hidden />} Save
+                    </button>
+                    <button type="button" onClick={() => setSave({ kind: "closed" })} className="btn btn-glass">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         </div>

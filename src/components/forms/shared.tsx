@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { CheckCircle2, FileText } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons";
+import { currentAccessToken } from "@/lib/supabase-browser";
 
 /** Shared input styling for the site's forms. */
 export const inputClass =
@@ -15,11 +16,15 @@ export function makeReference(prefix: "Q" | "M" | "E") {
   return `${prefix}-${mmdd}-${Math.floor(1000 + Math.random() * 9000)}`;
 }
 
-/** Sends a form to /api/enquiry; resolves when stored, throws a friendly message otherwise. */
+/**
+ * Sends a form to /api/enquiry; resolves when stored, throws a friendly message otherwise.
+ * A signed-in customer's token goes along so the request appears in their account history.
+ */
 export async function postEnquiry(body: Record<string, unknown>) {
+  const token = await currentAccessToken();
   const res = await fetch("/api/enquiry", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
     body: JSON.stringify({ ...body, sourcePage: window.location.pathname }),
   });
   const data = await res.json().catch(() => ({}));

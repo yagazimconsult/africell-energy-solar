@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, ClipboardList, Menu, Phone, Search, X } from "lucide-react";
+import { ChevronDown, ClipboardList, Menu, Phone, Search, UserRound, X } from "lucide-react";
+import { useAuth } from "@/components/account/AuthProvider";
 import { useContact } from "@/components/ContactProvider";
 
 import { Logo } from "@/components/Logo";
@@ -22,6 +23,7 @@ export function Header({ categories }: { categories: MenuCategory[] }) {
   const [searching, setSearching] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { count } = useQuote();
+  const { user } = useAuth();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -145,6 +147,15 @@ export function Header({ categories }: { categories: MenuCategory[] }) {
             >
               <Search className="size-[18px]" aria-hidden />
             </button>
+            <Link
+              href="/account"
+              aria-label={user ? "My account" : "Sign in or create an account"}
+              title={user ? "My account" : "Sign in"}
+              className={`relative grid size-10 place-items-center rounded-full hover:bg-mist hover:text-ink ${isActive("/account") ? "text-brand" : "text-ink/80"}`}
+            >
+              <UserRound className="size-[18px]" aria-hidden />
+              {user && <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-leaf ring-2 ring-white" aria-hidden />}
+            </Link>
             <Link href="/quote" aria-label={`Quote list, ${count} items`} className="relative grid size-10 place-items-center rounded-full text-ink/80 hover:bg-mist hover:text-ink">
               <ClipboardList className="size-[18px]" aria-hidden />
               {count > 0 && (
@@ -317,6 +328,9 @@ function MobileMenu({ nav, onClose }: { nav: ReturnType<typeof buildNav>; onClos
           )}
         </nav>
         <div className="grid gap-2 border-t border-line p-4">
+          <Link href="/account" className="btn w-full !bg-mist text-ink">
+            <UserRound className="size-4" aria-hidden /> My account / Sign in
+          </Link>
           <Link href="/quote" className="btn btn-sun w-full">
             Get a Quote
           </Link>

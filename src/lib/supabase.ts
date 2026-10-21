@@ -34,3 +34,14 @@ export const supabase = createClient(url, key, {
   auth: { persistSession: false, autoRefreshToken: false },
   global: { fetch: resilientFetch },
 });
+
+/**
+ * Same publishable-key client, but acting as a signed-in customer (their access token from the
+ * browser). RLS then treats the request as that customer, e.g. an enquiry is linked to their account.
+ */
+export function supabaseAsCustomer(accessToken: string) {
+  return createClient(url!, key!, {
+    auth: { persistSession: false, autoRefreshToken: false },
+    global: { fetch: resilientFetch, headers: { Authorization: `Bearer ${accessToken}` } },
+  });
+}

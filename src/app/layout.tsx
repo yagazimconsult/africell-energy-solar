@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
 import { ContactProvider } from "@/components/ContactProvider";
 import { QuoteProvider } from "@/components/quote/QuoteProvider";
+import { AuthProvider } from "@/components/account/AuthProvider";
 import type { MenuCategory } from "@/components/layout/nav";
 import "./globals.css";
 
@@ -72,12 +73,14 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           Skip to content
         </a>
         <ContactProvider contact={contact}>
+          <AuthProvider>
           <QuoteProvider>
             <Header categories={menu} />
             <main id="main">{children}</main>
             <Footer />
             <FloatingWhatsApp />
           </QuoteProvider>
+          </AuthProvider>
         </ContactProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
       </body>

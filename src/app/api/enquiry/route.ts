@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { site } from "@/config/site";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabaseAsCustomer } from "@/lib/supabase";
 
 // Receives enquiries and quote requests from the website and stores them in the Supabase
 // `enquiries` table using the publishable key. Row Level Security only lets the public
@@ -73,7 +73,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Please check your email address." }, { status: 422 });
   }
 
-  const { error } = await supabase.from("enquiries").insert({
+  const row = {
     kind: requestType === "quote" || items.length ? "quote" : "contact",
     name,
     phone,
@@ -82,7 +82,13 @@ export async function POST(req: Request) {
     message: message || null,
     items,
     source_page: sourcePage || null,
-  });
+  };
+  // Signed-in customers send their access token; the database then links the request to their
+  // account (enquiries.user_id defaults to the signed-in user). Guests are stored as before.
+  const token = req.headers.get("authorization")?.match(/^Bearer ([A-Za-z0-9._-]+)$/)?.[1];
+  let { error } = await (token ? supabaseAsCustomer(token) : supabase).from("enquiries").insert(row);
+  // An expired sign-in must never lose a request: store it as a guest request instead.
+  if (error && token) ({ error } = await supabase.from("enquiries").insert(row));
   if (error) {
     console.error("Enquiry insert failed", error.message);
     return NextResponse.json({ error: "We couldn't send your message. Please contact us on WhatsApp." }, { status: 502 });

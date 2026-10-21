@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/components/account/AuthProvider";
 import { Loader2, Wrench } from "lucide-react";
 import { useContact } from "@/components/ContactProvider";
 import { waMessage } from "@/config/site";
@@ -30,6 +31,19 @@ export function MaintenanceForm({ defaultProduct = "" }: { defaultProduct?: stri
   });
   const [status, setStatus] = useState<{ kind: "idle" | "sending" } | { kind: "sent"; reference: string; whatsapp: string } | { kind: "error"; message: string }>({ kind: "idle" });
   const { whatsappLink } = useContact();
+
+  // Signed-in customers: fill in what we already know (never overwriting what they typed).
+  const { user, profile } = useAuth();
+  useEffect(() => {
+    if (!user) return;
+    setForm((f) => ({
+      ...f,
+      name: f.name || profile?.full_name || "",
+      phone: f.phone || profile?.phone || "",
+      email: f.email || user.email || "",
+      location: f.location || profile?.city || "",
+    }));
+  }, [user, profile]);
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const urgencyLabel = URGENCY.find((u) => u.value === form.urgency)!.label;
