@@ -35,7 +35,7 @@ only when you say so.)
 | Phone & WhatsApp number | ✅ +234 707 518 4478 (07075184478) |
 | Customer accounts (sign in, saved calculations, request history) | 🟡 Built · waiting on 2 Supabase dashboard settings |
 | Showroom address | ✅ No. 13 Factory Road, Aba, Abia State |
-| Email | ⏳ Placeholder (by your choice, for now) |
+| Email | ✅ africellaba@gmail.com |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
 | Inverter & solar panel datasheets from Lagos | ⏳ Waiting on supplier |
@@ -50,6 +50,10 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-11-12 — Email address live
+- **africellaba@gmail.com** replaced the placeholder email everywhere: header, footer, Contact page ("Email us" card),
+  Privacy Policy and the business details Google reads. (Changed in the Supabase site settings, no code change.)
 
 ### 2026-10-21 — Customer accounts (optional)
 - Customers can **create an account** (email + password; home/small or business/bulk buyer) at My account.
