@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import { site } from "@/config/site";
+import { facebookHref, site } from "@/config/site";
 import { WhatsAppChooser } from "@/components/WhatsAppChooser";
 import { getContact } from "@/lib/site-settings";
 import { EnquiryForm } from "@/components/EnquiryForm";
-import { WhatsAppIcon } from "@/components/icons";
+import { FacebookIcon, WhatsAppIcon } from "@/components/icons";
 import { PageHero } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const contact = await getContact();
+  const facebook = facebookHref(contact.social);
   const cards = [
     { icon: Phone, title: "Call us", lines: [contact.phone], href: contact.phoneHref, cta: "Call now", image: "/images/site/gen-contact-call.webp" },
     { icon: Mail, title: "Email", lines: [contact.email], href: `mailto:${contact.email}`, cta: "Send email", image: "/images/site/gen-contact-email.webp" },
@@ -80,6 +81,17 @@ export default async function ContactPage() {
           <p className="mt-6 text-[14px] leading-relaxed text-white/60">
             Messages sent outside opening hours are answered on the next working day.
           </p>
+          {facebook && (
+            <a href={facebook} target="_blank" rel="noopener noreferrer" className="mt-6 flex items-center gap-3 rounded-2xl bg-white/[0.07] p-4 ring-1 ring-white/10 transition-colors hover:bg-white/[0.12]">
+              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#1877f2] text-white">
+                <FacebookIcon className="size-5" />
+              </span>
+              <span>
+                <span className="block text-[15px] font-semibold">Follow Africell Aba on Facebook</span>
+                <span className="block text-[13px] text-white/60">Offers, new stock and installation photos</span>
+              </span>
+            </a>
+          )}
         </aside>
       </section>
     </>

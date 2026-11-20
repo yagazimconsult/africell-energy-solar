@@ -3,13 +3,14 @@ import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { getCatalogue } from "@/lib/catalog";
 import { getContact } from "@/lib/site-settings";
 import { solutions } from "@/data/content";
-import { site } from "@/config/site";
+import { facebookHref, site } from "@/config/site";
 import { WhatsAppChooser } from "@/components/WhatsAppChooser";
 import { Logo } from "@/components/Logo";
-import { WhatsAppIcon } from "@/components/icons";
+import { FacebookIcon, WhatsAppIcon } from "@/components/icons";
 
 export async function Footer() {
   const [{ categories }, contact] = await Promise.all([getCatalogue(), getContact()]);
+  const facebook = facebookHref(contact.social);
   return (
     <footer className="sun-glow relative overflow-hidden text-white">
       <div className="grid-lines absolute inset-0 opacity-60" aria-hidden />
@@ -27,6 +28,11 @@ export async function Footer() {
               <a href={contact.phoneHref} className="btn btn-glass !px-4 !py-2.5 !text-[13px]">
                 <Phone className="size-4" aria-hidden /> Call us
               </a>
+              {facebook && (
+                <a href={facebook} target="_blank" rel="noopener noreferrer" aria-label="Africell Aba on Facebook" title="Africell Aba on Facebook" className="btn btn-glass !px-3 !py-2.5">
+                  <FacebookIcon className="size-4" />
+                </a>
+              )}
             </div>
           </div>
 

@@ -30,6 +30,12 @@ export interface Contact {
 }
 
 /** WhatsApp chat link with an optional pre-filled message. Falls back to the contact page until a number is set. */
+/** The Facebook page link from site settings, only if it is a real facebook.com address. */
+export function facebookHref(social: Record<string, string> | undefined) {
+  const url = social?.facebook?.trim();
+  return url && /^https:\/\/(www\.|m\.)?facebook\.com\/\S+$/i.test(url) ? url : null;
+}
+
 export function whatsappHref(whatsapp: string, message?: string) {
   if (!whatsapp) return "/contact";
   const base = `https://wa.me/${whatsapp}`;
