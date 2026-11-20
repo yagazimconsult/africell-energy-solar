@@ -36,6 +36,7 @@ only when you say so.)
 | Customer accounts (sign in, saved calculations, request history) | 🟡 Built · waiting on 2 Supabase dashboard settings |
 | Showroom address | ✅ No. 13 Factory Road, Aba, Abia State |
 | Email | ✅ africellaba@gmail.com |
+| Facebook page (Africell Aba) | ✅ Linked in footer and Contact page |
 | Written brand permission from Africell Lagos | ✅ Received |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
@@ -51,6 +52,10 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-11-20 — Facebook page linked
+- The **Africell Aba** Facebook page is now linked from the footer (every page) and the Contact page
+  ("Follow Africell Aba on Facebook"). Saved in the Supabase site settings, so it can be changed there any time.
 
 ### 2026-11-20 — Brand permission received
 - Africell Energy Solar (Lagos) gave written permission to use the Africell name and logo. The website's
