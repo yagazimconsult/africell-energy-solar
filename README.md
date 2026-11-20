@@ -62,7 +62,7 @@ Until the admin area is built, admins edit data in the Supabase **Table Editor**
 
 - [ ] Real address, phone, WhatsApp number, email and hours in `site_settings`
 - [ ] Domain purchased; set `NEXT_PUBLIC_SITE_URL`
-- [ ] Written brand-use permission from Africell Energy Solar (Lagos)
+- [x] Written brand-use permission from Africell Energy Solar (Lagos), received 2026-11-20
 - [ ] High-resolution / vector logo from Africell (current file is 350×100 px)
 - [ ] Inverter datasheets (all three models): only ratings are published today
 - [ ] Per-model solar panel datasheets (source site repeated one model's figures for every wattage)

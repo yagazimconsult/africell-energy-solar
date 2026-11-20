@@ -36,6 +36,7 @@ only when you say so.)
 | Customer accounts (sign in, saved calculations, request history) | 🟡 Built · waiting on 2 Supabase dashboard settings |
 | Showroom address | ✅ No. 13 Factory Road, Aba, Abia State |
 | Email | ✅ africellaba@gmail.com |
+| Written brand permission from Africell Lagos | ✅ Received |
 | Online preview link (Vercel) | ⏳ Waiting for you to connect Vercel |
 | Domain name | ⏳ Not bought yet |
 | Inverter & solar panel datasheets from Lagos | ⏳ Waiting on supplier |
@@ -50,6 +51,10 @@ only when you say so.)
 ---
 
 ## Log
+
+### 2026-11-20 — Brand permission received
+- Africell Energy Solar (Lagos) gave written permission to use the Africell name and logo. The website's
+  "Authorised Africell dealer in Aba, Abia State" line is now confirmed. Keep a copy of the letter on file.
 
 ### 2026-11-12 — Email address live
 - **africellaba@gmail.com** replaced the placeholder email everywhere: header, footer, Contact page ("Email us" card),
